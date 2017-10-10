@@ -1,5 +1,6 @@
 package lotto.lotteryTicket;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
@@ -31,22 +32,22 @@ public class LotteryTicketModel extends Model{
 		
 	}
 	
-	public double getChanceAsPercentage(int pickedRightNormal, int pickedRightLucky) {
+	public double getChanceAsPercentage(int pickedCorrecttNormal, int pickedCorrectLucky) {
 		int rightNumbers = this.chooseNumber;
 		int wrongNumbers = this.maxNumber - this.chooseNumber;
-		int pickedWrongNormal = this.chooseNumber-pickedRightNormal;
+		int pickedWrongNormal = this.chooseNumber-pickedCorrecttNormal;
 		
 		
-		long chancesNormal = binomi(rightNumbers, pickedRightNormal) * binomi(wrongNumbers, pickedWrongNormal);
+		BigInteger chancesNormal = chancesNormal.add((binomi(rightNumbers, pickedCorrecttNormal)) * binomi(wrongNumbers, pickedWrongNormal));
 		System.out.println("Chanc norm:" +chancesNormal);
 		long totalChanceNormal = binomi(this.maxNumber, this.chooseNumber);
 		
 		
 		int rightNumbersLucky = this.chooseLucky;
 		int wrongNumbersLucky = this.maxLucky - this.chooseLucky;
-		int pickedWrongLucky = this.chooseLucky - pickedRightLucky;
+		int pickedWrongLucky = this.chooseLucky - pickedCorrectLucky;
 		
-		long chanceLucky = binomi(rightNumbersLucky, pickedRightLucky) * binomi(wrongNumbersLucky, pickedWrongLucky);
+		long chanceLucky = binomi(rightNumbersLucky, pickedCorrectLucky) * binomi(wrongNumbersLucky, pickedWrongLucky);
 		long totalChanceLucky = binomi(this.maxLucky, this.chooseLucky);
 		System.out.println(((chancesNormal/totalChanceNormal) * (chanceLucky/totalChanceLucky))*100);
 		return ((chancesNormal/totalChanceNormal) * (chanceLucky/totalChanceLucky))*100;
@@ -59,19 +60,15 @@ public class LotteryTicketModel extends Model{
 	
 	
 	
-	//SRC: https://stackoverflow.com/questions/36925730/java-calculating-binomial-coefficient by Mad Matts
-	public long binomi(long n, long k) {
-		if(k==0) {
-			return 1;
-		}
-		
-		if(k>n/2) {
-			return binomi(n,n-k);
-		}
-		return n * binomi(n-1,k-1) / k;
-		
+	//SRC: http://www.programming-idioms.org/idiom/67/binomial-coefficient-n-choose-k/281/java
+	static BigInteger binomi(int N, int K) {
+	    BigInteger ret = BigInteger.ONE;
+	    for (int k = 0; k < K; k++) {
+	        ret = ret.multiply(BigInteger.valueOf(N-k))
+	                 .divide(BigInteger.valueOf(k+1));
+	    }
+	    return ret;
 	}
-	
 	
 
 
