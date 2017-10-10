@@ -23,6 +23,7 @@ public class LotteryTicketMain extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        
     }
 
     /**
