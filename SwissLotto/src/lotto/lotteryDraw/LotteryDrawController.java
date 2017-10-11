@@ -1,8 +1,6 @@
 package lotto.lotteryDraw;
 
 import lotto.abstractClasses.Controller;
-import lotto.abstractClasses.Model;
-import lotto.abstractClasses.View;
 
 public class LotteryDrawController extends Controller<LotteryDrawModel, LotteryDrawView> {
 

@@ -1,9 +1,6 @@
 package lotto.lotteryTicket;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.TreeSet;
-
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lotto.abstractClasses.Controller;
@@ -17,6 +14,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 
 	private int numberCount = 0;
 	private int luckyNumberCount = 0;
+	private Stage oldStage;
 
 	// public void addActionEvents(ArrayList<Button> bArray, int
 	// maxNumOfSelectableButtons, int numOfSelectedButtons) {
@@ -138,7 +136,12 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 		});
 		
 		view.play.setOnAction((event) -> {
+			//This allows only one WinScreen to be active. Thus the play Button can be spammed
+			if(this.oldStage != null) {
+			this.oldStage.close();
+			}
 			WinScreen winScreen = new WinScreen(model);
+			this.oldStage = winScreen.getStage();
 		});
 		
 	}

@@ -2,7 +2,6 @@ package lotto.lotteryDraw;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lotto.abstractClasses.Model;
 import lotto.abstractClasses.View;
 
 public class LotteryDrawView extends View<LotteryDrawModel>{

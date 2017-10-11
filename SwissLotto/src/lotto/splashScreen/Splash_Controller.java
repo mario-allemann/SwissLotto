@@ -1,7 +1,5 @@
 package lotto.splashScreen;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import lotto.LotteryTicketMain;
 import lotto.abstractClasses.Controller;

@@ -1,7 +1,5 @@
 package lotto.lotteryTicket;
 
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import javafx.scene.Scene;
@@ -9,10 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -77,6 +72,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		}
 		numbers.setVgap(3.5);
 		numbers.setHgap(3.5);
+		numbers.setPrefColumns(6);
 		
 		
 		// Sets up the lucky numbers
@@ -122,11 +118,9 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		v.getChildren().add(new Label("Chances:"));
 		for(int normalNumber = model.chooseNumber; normalNumber >=3; normalNumber--) {
 			for(int luckyNumber = model.chooseLucky; luckyNumber>=0; luckyNumber--) {
-				HBox h = new HBox();
 				String labelString = normalNumber + " + " + luckyNumber + "\t" + model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
 				v.getChildren().add(new Label(labelString));
 			}
-//			v.getChildren().add(new Label(normalNumber + "\t\t " + model.getChanceAsPercentage(normalNumber, 0) + "%"));
 		}
 		return v;
 	}

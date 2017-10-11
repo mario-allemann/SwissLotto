@@ -2,11 +2,8 @@ package lotto.lotteryTicket;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javafx.scene.control.Button;
