@@ -2,6 +2,7 @@ package lotto.lotteryTicket;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -9,12 +10,11 @@ import lotto.abstractClasses.Controller;
 import lotto.changeLotteryTicket.ChangeLotteryTicketController;
 import lotto.changeLotteryTicket.ChangeLotteryTicketModel;
 import lotto.changeLotteryTicket.ChangeLotteryTicketView;
+import lotto.winScreen.WinScreen;
 
 public class LotteryTicketController extends Controller<LotteryTicketModel, LotteryTicketView> {
-	String cssGreen = "-fx-background-color: green";
+	String cssGreen = "-fx-background-color: lime";
 
-	public ArrayList<Integer> selectedNumbers = new ArrayList<Integer>();
-	public ArrayList<Integer> selectedLuckyNumbers = new ArrayList<Integer>();
 	private int numberCount = 0;
 	private int luckyNumberCount = 0;
 
@@ -109,12 +109,12 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 				}
 				// Lock the buttons if too many have been clicked
 				if (luckyNumberCount >= model.chooseLucky) {
-					lockButtons(model.luckyNumberButtons);
+					lockLuckyButtons(model.luckyNumberButtons);
 				}
 				// If a user has selected the max number of buttons and deselects a button,
 				// unlock the other buttons to allow the user to select a new one
 				if (luckyNumberCount < model.chooseLucky) {
-					unlockButtons(model.luckyNumberButtons);
+					unlockLuckyButtons(model.luckyNumberButtons);
 				}
 
 			});
@@ -129,19 +129,31 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			ChangeLotteryTicketView changeLTView = new ChangeLotteryTicketView(changeLTStage, changeLTModel);
 			new ChangeLotteryTicketController(changeLTModel, changeLTView);
 			changeLTView.start();
-			view.stop();
+			changeLTView.getStage().setOnHidden((event2) -> {
+				if(changeLTView.getCloseValue().equals("save")){
+					view.stop();
+				}
+			});
+//			view.stop();
 		});
-
+		
+		view.play.setOnAction((event) -> {
+			WinScreen winScreen = new WinScreen(model);
+		});
+		
 	}
+	
+		
 
 	// Locks all number buttons which are not selected, the selected buttons(int
 	// values) get saved to an ArrayList
 	private void lockButtons(ArrayList<Button> bArray) {
+		model.chosenNumbers.clear();
 		for (Button b : bArray) {
 			if (!b.getStyle().equals(cssGreen)) {
 				b.setDisable(true);
 			} else {
-				selectedNumbers.add(Integer.parseInt(b.getText()));
+				model.addNumber(Integer.parseInt(b.getText()));
 			}
 		}
 
@@ -155,5 +167,28 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 		}
 
 	}
+	
+	private void lockLuckyButtons(ArrayList<Button> bArray) {
+		model.chosenLuckys.clear();
+		for (Button b : bArray) {
+			if (!b.getStyle().equals(cssGreen)) {
+				b.setDisable(true);
+			} else {
+				model.addLucky(Integer.parseInt(b.getText()));
+			}
+		}
+
+	}
+
+	// Unlocks all number Buttons
+	private void unlockLuckyButtons(ArrayList<Button> bArray) {
+
+		for (Button b : bArray) {
+			b.setDisable(false);
+		}
+
+	}
+	
+	
 
 }

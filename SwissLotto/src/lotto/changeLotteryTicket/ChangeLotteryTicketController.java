@@ -35,6 +35,7 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 						isValidInput=false;
 						break;
 					}
+					model.closeValue = "save";
 				} catch (NumberFormatException e) {
 					view.notification.setText(t.getString("cLT.label.notification.onlyEnterNumbers"));
 					isValidInput = false;
@@ -56,6 +57,7 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 		});
 
 		view.cancel.setOnAction((event) -> {
+			model.closeValue = "cancel";
 			view.stop();
 		});
 	}

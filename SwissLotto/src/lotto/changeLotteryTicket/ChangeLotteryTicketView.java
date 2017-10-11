@@ -20,14 +20,15 @@ import lotto.commonClasses.Translator;
 import lotto.lotteryTicket.LotteryTicketController;
 
 public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
-
+	
 	public ChangeLotteryTicketView(Stage stage, ChangeLotteryTicketModel model) {
 		super(stage, model);
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
+	public String getCloseValue() {
+		return model.closeValue;
+	}
 
 
 	Menu menuOptions;

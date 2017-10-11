@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -30,7 +31,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 
 	TilePane numbers;
 	TilePane luckyNumbers;
-	
+	Button play;
 	
 	
 
@@ -76,7 +77,8 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		}
 		numbers.setVgap(3.5);
 		numbers.setHgap(3.5);
-
+		
+		
 		// Sets up the lucky numbers
 		luckyNumbers = new TilePane();
 		for (int i = 1; i <= model.maxLucky; i++) {
@@ -85,7 +87,6 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 			luckyNumber.setShape(new Circle(2));
 			luckyNumber.setMinWidth(50);
 			luckyNumber.setMinHeight(50);
-			//TODO for some reason this arraylist only works in the model
 			model.luckyNumberButtons.add(luckyNumber);
 			luckyNumbers.getChildren().add(luckyNumber);
 		}
@@ -99,14 +100,12 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		
 		
 		VBox chances = new VBox();
-		chances = this.calculateChances();
-
-		HBox numbersAndChances = new HBox();
-		numbersAndChances.getChildren().addAll(allNumbers, chances);
 		
-		bp.setCenter(numbersAndChances);
+		chances = this.calculateChances();
+		bp.setRight(chances);
+		bp.setCenter(allNumbers);
 
-		Button play = new Button(t.getString("lt.button"));
+		this.play = new Button(t.getString("lt.button"));
 		HBox hb = new HBox();
 		hb.getChildren().addAll(play);
 
@@ -117,15 +116,17 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		return scene;
 	}
 
-	
+	//Iterates through all win-possibilites, calculates their chances and return a VBox with labels
 	public VBox calculateChances() {
 		VBox v = new VBox();
+		v.getChildren().add(new Label("Chances:"));
 		for(int normalNumber = model.chooseNumber; normalNumber >=3; normalNumber--) {
-			for(int luckyNumber = model.chooseLucky; luckyNumber>0; luckyNumber--) {
-				String labelString = normalNumber + " + " + luckyNumber + ": " + model.getChanceAsPercentage(normalNumber, luckyNumber);
+			for(int luckyNumber = model.chooseLucky; luckyNumber>=0; luckyNumber--) {
+				HBox h = new HBox();
+				String labelString = normalNumber + " + " + luckyNumber + "\t" + model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
 				v.getChildren().add(new Label(labelString));
 			}
-			v.getChildren().add(new Label(normalNumber + ": " + model.getChanceAsPercentage(normalNumber, 0)));
+//			v.getChildren().add(new Label(normalNumber + "\t\t " + model.getChanceAsPercentage(normalNumber, 0) + "%"));
 		}
 		return v;
 	}
