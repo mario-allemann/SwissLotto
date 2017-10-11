@@ -89,11 +89,8 @@ public class LotteryTicketMain extends Application {
         // Initialize the application MVC components. Note that these components
         // can only be initialized now, because they may depend on the
         // resources initialized by the splash screen
-        System.out.println("before model");
         LotteryTicketModel model = new LotteryTicketModel();
-        System.out.println("before view");
         view = new LotteryTicketView(appStage, model);
-        System.out.println("before controller");
         new LotteryTicketController(model, view);
 
         // Resources are now initialized

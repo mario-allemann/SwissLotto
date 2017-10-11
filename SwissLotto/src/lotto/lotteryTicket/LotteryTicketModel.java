@@ -3,6 +3,7 @@ package lotto.lotteryTicket;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javafx.scene.control.Button;
 import lotto.ServiceLocator;
@@ -16,7 +17,7 @@ public class LotteryTicketModel extends Model{
 	protected int chooseLucky = Integer.parseInt(sl.getConfiguration().getOption("ChooseLucky"));
 	protected int maxLucky = Integer.parseInt(sl.getConfiguration().getOption("MaxLucky"));
 	
-	ArrayList<Integer> chosenNumbers = new ArrayList<Integer>();
+	TreeSet<Integer> chosenNumbers = new TreeSet<Integer>();
 	public ArrayList<Button> numberButtons = new ArrayList<Button>();
 	public ArrayList<Button> luckyNumberButtons = new ArrayList<Button>();
 	
@@ -38,7 +39,6 @@ public class LotteryTicketModel extends Model{
 		
 		
 		long chancesNormal = binomi(rightNumbers, pickedRightNormal) * binomi(wrongNumbers, pickedWrongNormal);
-		System.out.println("Chanc norm:" +chancesNormal);
 		long totalChanceNormal = binomi(this.maxNumber, this.chooseNumber);
 		
 		
@@ -59,7 +59,7 @@ public class LotteryTicketModel extends Model{
 	
 	
 	
-	//SRC: https://stackoverflow.com/questions/36925730/java-calculating-binomial-coefficient by Mad Matts
+	//SRC: https://stackoverflow.com/questions/36925730/java-calculating-binomial-coefficient
 	public long binomi(long n, long k) {
 		if(k==0) {
 			return 1;
