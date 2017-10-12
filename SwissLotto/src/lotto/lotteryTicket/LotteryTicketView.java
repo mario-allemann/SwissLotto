@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -98,7 +99,9 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		VBox chances = new VBox();
 		
 		chances = this.calculateChances();
-		bp.setRight(chances);
+		ScrollPane sp = new ScrollPane();
+		sp.setContent(chances);
+		bp.setRight(sp);
 		bp.setCenter(allNumbers);
 
 		this.play = new Button(t.getString("lt.button"));
