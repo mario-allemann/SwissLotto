@@ -83,8 +83,12 @@ public class LotteryTicketModel extends Model{
 	
 	
 
-
-	//SRC: http://www.programming-idioms.org/idiom/67/binomial-coefficient-n-choose-k/281/java
+	/**Returns the binominal coefficient
+	 * 
+	 * @param N
+	 * @param K
+	 * @author http://www.programming-idioms.org/idiom/67/binomial-coefficient-n-choose-k/281/java
+	 */
 	public BigInteger binomi(int N, int K) {
 	    BigInteger ret = BigInteger.ONE;
 	    for (int k = 0; k < K; k++) {

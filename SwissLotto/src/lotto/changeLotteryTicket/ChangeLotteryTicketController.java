@@ -1,5 +1,7 @@
 package lotto.changeLotteryTicket;
 
+import java.util.ArrayList;
+
 import javafx.stage.Stage;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.Controller;
@@ -15,49 +17,63 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 		Configuration c = sl.getConfiguration();
 		Translator t = sl.getTranslator();
 		final int MAX_NUM_OF_BUTTONS = 100;
-		
-		
-		view.save.setOnAction((event) -> {
-			boolean isValidInput = true;
-			for (TextFieldWProperty tf : model.tfp) {
-				
 
-				// Check if input is valid
+		view.save.setOnAction((event) -> {
+
+			ArrayList<Integer> userInputs = new ArrayList<Integer>();
+
+			// Adds user inputs to an ArrayList for easier use
+			for (TextFieldWProperty tf : model.tfp) {
 				try {
-					int number = Integer.parseInt(tf.getText());
-					if (number <= 0) {
+					userInputs.add(Integer.parseInt(tf.getText()));
+				}
+				// Checks whether user has entered non-numbers
+				catch (NumberFormatException e) {
+					view.notification.setText(t.getString("cLT.label.notification.onlyEnterNumbers"));
+					return;
+				}
+			}
+
+			// The user cannot select more numbers than there are on the lottery ticket
+			if (userInputs.get(0) > userInputs.get(1) || userInputs.get(2) > userInputs.get(3)) {
+				view.notification.setText(t.getString("cLT.label.notification.totalNumbesTooSmall"));
+				return;
+			}
+
+			for (Integer i : userInputs) {
+
+				try {
+					// Checks whether the user has entered negative numbers
+					if (i <= 0) {
 						view.notification.setText(t.getString("cLT.label.notification.onlyPositiveNumbers"));
-						isValidInput = false;
-						break;
+						return;
 					}
-					if (number > MAX_NUM_OF_BUTTONS) {
+					// Checks whether the user wants too many buttons (e.g. Generating 1'000'000
+					// Buttons can't be handled by the system)
+					if (i > MAX_NUM_OF_BUTTONS) {
 						view.notification
 								.setText(t.getString("cLT.label.notification.maxNumOfButton") + MAX_NUM_OF_BUTTONS);
-						isValidInput=false;
-						break;
+						return;
 					}
-					
-					 
-					
+
 					model.closeValue = "save";
-				} catch (NumberFormatException e) {
-					view.notification.setText(t.getString("cLT.label.notification.onlyEnterNumbers"));
-					isValidInput = false;
-					break;
-					
+
+				} catch (Exception e) {
+					e.printStackTrace();
+
 				}
 
-				// set configs and save to file
+			}
+			// If the inputs are correct, the config can be set
+			for (TextFieldWProperty tf : model.tfp) {
 				c.setLocalOption(tf.property, tf.getText());
+			}
 
-			}
-			
-			//If all inputs are corret save config and close windows
-			if (isValidInput) {
-				c.save();
-				this.createNewLotteryTicket();
-				view.stop();
-			}
+			// Save config, create a new ticket and close window
+			c.save();
+			this.createNewLotteryTicket();
+			view.stop();
+
 		});
 
 		view.cancel.setOnAction((event) -> {
@@ -65,8 +81,10 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 			view.stop();
 		});
 	}
-	
 
+
+
+	// Creates a new lottery ticket
 	public void createNewLotteryTicket() {
 		Stage changeLTStage = new Stage();
 		LotteryTicketModel changeLTModel = new LotteryTicketModel();

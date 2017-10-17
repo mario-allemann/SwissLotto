@@ -34,7 +34,8 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 		this.addActionEvent(model.numberButtons, numberCount, model.chooseNumber, model.chosenNumbers, this.buttonsLocked);
 		this.addActionEvent(model.luckyNumberButtons, luckyCount, model.chooseLucky, model.chosenLuckys, this.luckyButtonsLocked);
 		
-				
+		
+		//Opens up a menu which allows the user to modify the lottery ticket
 		view.menuOptionsChangeLT.setOnAction((event) -> {
 			
 			Stage changeLTStage = new Stage();
@@ -51,7 +52,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 		
 		//Opens up a play menu
 		view.play.setOnAction((event) -> {
-			//This allows only one WinScreen to be active. Thus the play Button can be spammed
+			//Allows only one WinScreen to be active. Thus the play Button can be spammed
 			if(this.oldStage != null) {
 			this.oldStage.close();
 			}
@@ -111,7 +112,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	}
 	
 		
-	/** Locks all number buttons which are not selected, saves the selected numbers to a TreeSet
+	/** Locks all buttons which are not selected, saves the selected numbers to a TreeSet
 	 * 
 	 * @param bArray An ArrayList with buttons
 	 * @param numbers A container for the user selection
@@ -131,7 +132,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	}
 	
 	
-	/**Unlocks all number Buttonsö
+	/**Unlocks all buttons
 	 * @param bArray An ArrayList with buttons
 	 */
 	private void unlockButtons(ArrayList<Button> bArray) {
