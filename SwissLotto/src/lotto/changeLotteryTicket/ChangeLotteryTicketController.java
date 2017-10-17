@@ -20,6 +20,7 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 		view.save.setOnAction((event) -> {
 			boolean isValidInput = true;
 			for (TextFieldWProperty tf : model.tfp) {
+				
 
 				// Check if input is valid
 				try {
@@ -35,6 +36,9 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 						isValidInput=false;
 						break;
 					}
+					
+					 
+					
 					model.closeValue = "save";
 				} catch (NumberFormatException e) {
 					view.notification.setText(t.getString("cLT.label.notification.onlyEnterNumbers"));
@@ -63,7 +67,6 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 	}
 	
 
-	// TODO Have some kind of reload function for the lotteryticket instead of generation a new stage
 	public void createNewLotteryTicket() {
 		Stage changeLTStage = new Stage();
 		LotteryTicketModel changeLTModel = new LotteryTicketModel();

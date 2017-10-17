@@ -98,20 +98,7 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 
 		return scene;
 
-		// Obsolete code: replaced by setConfigTF
-		//
-		// HBox chooseNumbers = new HBox();
-		// Label chooseNumbersLabel = new Label("How many numbers to choose on the
-		// lottery ticket");
-		// TextField chooseNumbersTF = new TextField();
-		// chooseNumbersTF.setText(sl.getConfiguration().getOption("ChooseNumber"));
-		// chooseNumbers.getChildren().addAll(chooseNumbersLabel, chooseNumbersTF);
-		//
-		// HBox maxNumbers = new HBox();
-		// Label maxNumbersLabel = new Label("Numbers of digits on lottery ticket");
-		// TextField maxNumbersTF = new TextField();
-		// maxNumbersTF.setText(sl.getConfiguration().getOption("MaxNumber"));
-		//
+	
 
 	}
 

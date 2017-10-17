@@ -105,6 +105,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		bp.setCenter(allNumbers);
 
 		this.play = new Button(t.getString("lt.button"));
+		this.play.setDisable(true);
 		HBox hb = new HBox();
 		hb.getChildren().addAll(play);
 
@@ -115,11 +116,11 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		return scene;
 	}
 
-	//Iterates through all win-possibilites, calculates their chances and return a VBox with labels
+	//Iterates through all win-possibilites, calculates their chances and returns a VBox with labels
 	public VBox calculateChances() {
 		VBox v = new VBox();
 		v.getChildren().add(new Label("Chances:"));
-		for(int normalNumber = model.chooseNumber; normalNumber >=3; normalNumber--) {
+		for(int normalNumber = model.chooseNumber; normalNumber >=0; normalNumber--) {
 			for(int luckyNumber = model.chooseLucky; luckyNumber>=0; luckyNumber--) {
 				String labelString = normalNumber + " + " + luckyNumber + "\t" + model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
 				v.getChildren().add(new Label(labelString));

@@ -13,6 +13,8 @@ import lotto.abstractClasses.Model;
 public class LotteryTicketModel extends Model{
 	ServiceLocator sl = ServiceLocator.getServiceLocator();
 	
+	
+	//Loads all the information relevant for the lottery ticket from the config file
 	protected int chooseNumber = Integer.parseInt(sl.getConfiguration().getOption("ChooseNumber"));
 	protected int maxNumber = Integer.parseInt(sl.getConfiguration().getOption("MaxNumber"));
 	protected int chooseLucky = Integer.parseInt(sl.getConfiguration().getOption("ChooseLucky"));
@@ -25,68 +27,57 @@ public class LotteryTicketModel extends Model{
 	
 	
 	
-	public void addNumber(int number) {
-		chosenNumbers.add(number);
+	public void addNumber(int number, TreeSet<Integer> numbers) {
+		numbers.add(number);
 		
 	}
 	
-	public void removeNumber(int number) {
-		chosenNumbers.remove(Integer.valueOf(number));
+	public void removeNumber(int number, TreeSet<Integer> numbers) {
+		numbers.remove(Integer.valueOf(number));
 	}
 	
-	public void addLucky(int number) {
-		this.chosenLuckys.add(number);
+
+	/** Calculates the chance for a typical lottery scenario
+	 * 
+	 * 
+	 * @param numOfCorrectNumbers How many lottery numbers got guessed correctly
+	 * @param numOfDrawnNumbers How many lottery numbers get drawn in a game
+	 * @param totalNumbers Total pool of which lottery numbers get drawn from
+	 * @return The chance for the given lottery scenario
+	 */
+	public BigDecimal getChance(int numOfCorrectNumbers, int numOfDrawnNumbers, int totalNumbers) {
+		int totalWrongNumbers = totalNumbers-numOfDrawnNumbers;
+		int numOfWrongGuesses = numOfDrawnNumbers - numOfCorrectNumbers;
+		
+		
+		BigInteger possibilities = binomi(numOfDrawnNumbers, numOfCorrectNumbers).multiply(binomi(totalWrongNumbers, numOfWrongGuesses));
+		BigInteger numOfTotalPossibilities = binomi(totalNumbers, numOfDrawnNumbers);
+		
+		//Cast to Big Decimal in order to calculate chance. BigInt would be rounded down to zero
+		BigDecimal decimalPossiblities = new BigDecimal(possibilities);
+		BigDecimal decimalNumOfTotalPossibilities = new BigDecimal(numOfTotalPossibilities);
+		
+		BigDecimal chance =  decimalPossiblities.divide(decimalNumOfTotalPossibilities, 20, RoundingMode.HALF_EVEN);
+		return chance;
+		
 	}
+
 	
-	public void removeLucky(int number) {
-		this.chosenLuckys.remove(Integer.valueOf(number));
-	}
-
-
-
-
-	//Calculates the a chance for a lotteryticket.
-	public String getChanceAsPercentage(int pickedCorrectNormal, int pickedCorrectLucky) {
-		int rightNumbers = this.chooseNumber;
-		int wrongNumbers = this.maxNumber - this.chooseNumber;
-		int pickedWrongNormal = this.chooseNumber-pickedCorrectNormal;
-		
-		
-		//Possibilites of
-		BigInteger possNormal = binomi(rightNumbers, pickedCorrectNormal).multiply(binomi(wrongNumbers, pickedWrongNormal));
-		System.out.println("Poss normal: " + possNormal);
-		BigInteger totalPossNormal = binomi(this.maxNumber, this.chooseNumber);
-		System.out.println("totalPossNormal" + totalPossNormal);
-		
-		BigDecimal decPossNormal = new BigDecimal(possNormal);
-		System.out.println("decPossNormal" + decPossNormal );
-		BigDecimal decTotalPossNormal = new BigDecimal(totalPossNormal);
-		System.out.println("decTotalPossNormal" + decTotalPossNormal);
-		
-		
-		
-		BigDecimal chanceNormal = decPossNormal.divide(decTotalPossNormal, 200, RoundingMode.HALF_EVEN);
 	
+	
+	/** Calculates the combined chance (normal and lucky numbers) for a lottery ticket
+	 * 
+	 * @param pickedCorrectNormal How many lottery numbers got guessed correctly
+	 * @param pickedCorrectLuckys How many lottery lucky numbers got guessed correctly
+	 * @return The chance for a lottery ticket
+	 */
+	public String getChanceAsPercentage(int pickedCorrectNormal, int pickedCorrectLuckys) {
 		
+		BigDecimal normalChance = getChance(pickedCorrectNormal, this.chooseNumber, this.maxNumber);
+		BigDecimal luckyChance = getChance(pickedCorrectLuckys, this.chooseLucky, this.maxLucky);
 		
-		int rightNumbersLucky = this.chooseLucky;
-		int wrongNumbersLucky = this.maxLucky - this.chooseLucky;
-		int pickedWrongLucky = this.chooseLucky - pickedCorrectLucky;
-		
-		BigInteger possLucky = binomi(rightNumbersLucky, pickedCorrectLucky).multiply(binomi(wrongNumbersLucky, pickedWrongLucky));
-		BigInteger totalPossLucky = binomi(this.maxLucky, this.chooseLucky);
-		
-		BigDecimal decPossLucky = new BigDecimal(possLucky);
-		BigDecimal decTotalPossLucky = new BigDecimal(totalPossLucky);
-		
-		BigDecimal chanceLucky = decPossLucky.divide(decTotalPossLucky, 200, RoundingMode.HALF_EVEN);
-		
-		String result = (chanceNormal.multiply(chanceLucky)).multiply(new BigDecimal(100)).toPlainString().substring(0, 15);
-		
-		return result;
-		
-		
-		
+		return (normalChance.multiply(luckyChance).multiply(BigDecimal.valueOf(100)).toPlainString()).substring(0, 15);
+			
 		
 	}
 	
@@ -167,13 +158,6 @@ public class LotteryTicketModel extends Model{
 	public void setChosenLuckys(TreeSet<Integer> chosenLuckys) {
 		this.chosenLuckys = chosenLuckys;
 	}
-	
-
-
-
-
-	
-	
 	
 	
 }
