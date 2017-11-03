@@ -28,8 +28,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 	}
 
 
-	Menu menuOptions;
-	Menu menuOptionsLanguage;
 
 	protected Button save;
 	protected Button cancel;
@@ -65,16 +63,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 
 		BorderPane bp = new BorderPane();
 		
-		//Setting up menu bar
-		MenuBar menu = new MenuBar();
-		menuOptions = new Menu(t.getString("program.menu.options"));
-		menuOptionsLanguage = new Menu("program.menu.language");
-		menuOptions.getItems().addAll(menuOptionsLanguage);
-
-		menu.getMenus().addAll(menuOptions);
-		bp.setTop(menu);
-		
-		
 		//setting up TextFields and Labels for every config
 		this.vb = new VBox();
 		this.setConfigTF("cLT.label.chooseNumber", "ChooseNumber");
@@ -101,5 +89,7 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 	
 
 	}
+	
+
 
 }

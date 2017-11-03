@@ -56,6 +56,10 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			WinScreen winScreen = new WinScreen(model);
 			this.oldStage = winScreen.getStage();
 		});
+		
+		view.menuOptionsLanguage.setOnAction((event) -> {
+			view.updateTexts();
+		});
 
 	}
 
