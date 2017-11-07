@@ -9,7 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -18,7 +21,7 @@ public class PiView extends View<PiModel> {
 	
 	//Bottom1:
 	Label lblPiEstimate;
-	Label lblEstimateAccuracy;
+	Label lblAccuracy;
 	
 	//Bottom2:
 	Button btnStart;
@@ -43,11 +46,20 @@ public class PiView extends View<PiModel> {
 		
 		//Center: Circle and Square
 		
+		Rectangle r = new Rectangle(500,550);
+		
+		Circle c = new Circle(100,100,150);
+		c.applyCss();
+		c.autosize();
+		
+	
+		main.setCenter(r);
+		
 		//Bottom 1: Pi estimation
 		VBox bottom1 = new VBox();
 		Label estimate = new Label(t.getString("mw.lblEstimate"));
 		lblPiEstimate = new Label();
-		Label lblEstimateAccuracy = new Label(t.getString("mw.lblEsitmateAccuracy"));
+		Label lblEstimateAccuracy = new Label(t.getString("mw.lblAccuracy"));
 		
 		bottom1.getChildren().addAll(estimate, lblPiEstimate, lblEstimateAccuracy);
 		
