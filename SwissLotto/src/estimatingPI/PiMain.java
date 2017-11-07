@@ -23,7 +23,6 @@ public class PiMain extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        
     }
 
     /**

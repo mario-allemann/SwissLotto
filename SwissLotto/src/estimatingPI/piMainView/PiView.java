@@ -2,6 +2,7 @@ package estimatingPI.piMainView;
 
 import estimatingPI.abstractClasses.View;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class PiView extends View<PiModel> {
@@ -13,8 +14,9 @@ public class PiView extends View<PiModel> {
 
 	@Override
 	protected Scene create_GUI() {
-		// TODO Auto-generated method stub
 		return null;
+		
+		
 	}
 	
 
