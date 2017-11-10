@@ -1,11 +1,9 @@
 package estimatingPI.piMainView;
 
-import java.util.Random;
 
 import estimatingPI.ServiceLocator;
 import estimatingPI.abstractClasses.View;
 import estimatingPI.commonClasses.Translator;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,10 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 public class PiView extends View<PiModel> {
 
