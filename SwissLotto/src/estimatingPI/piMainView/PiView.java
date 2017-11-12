@@ -28,6 +28,7 @@ public class PiView extends View<PiModel> {
 	Button btnStart;
 	Button btnStop;
 	Slider slider;
+	Button btnChart;
 		
 	//Center
 	Arc arc;
@@ -52,6 +53,7 @@ public class PiView extends View<PiModel> {
 
 		BorderPane main = new BorderPane();
 		// Top: Menu Bar
+		
 
 		// Center: Circle and Square
 		sideLength = 750;
@@ -62,10 +64,10 @@ public class PiView extends View<PiModel> {
 		//TODO Set these in constructor
 		arc = new Arc();
 		arc.setCenterX(0);
-		arc.setCenterY(sideLength);
+		arc.setCenterY(0);
 		arc.setRadiusX(sideLength);
 		arc.setRadiusY(sideLength);
-		arc.setStartAngle(360);
+		arc.setStartAngle(270);
 		arc.setLength(90);
 		arc.setType(ArcType.ROUND);
 		arc.setFill(Color.ORANGE);
@@ -91,11 +93,12 @@ public class PiView extends View<PiModel> {
 		btnStart = new Button(t.getString("mw.btnStart"));
 		btnStop = new Button(t.getString("mw.btnStop"));
 		slider = new Slider(0, 1, 0.5);
+		btnChart = new Button(t.getString("mw.btnChart"));
 
 		// TODO Add text to slider positions
 		slider.setShowTickLabels(true);
 
-		bottom2.getChildren().addAll(btnStart, btnStop, slider);
+		bottom2.getChildren().addAll(btnStart, btnStop, slider, btnChart);
 
 		// Bottom combined
 		VBox bottom = new VBox();
@@ -109,5 +112,7 @@ public class PiView extends View<PiModel> {
 		return scene;
 
 	}
+	
+	
 
 }
