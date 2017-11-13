@@ -1,13 +1,9 @@
 package estimatingPI.piMainView;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import estimatingPI.ServiceLocator;
 import estimatingPI.abstractClasses.Controller;
 import estimatingPI.chart.PiChart;
-import estimatingPI.commonClasses.Configuration;
-import estimatingPI.commonClasses.Translator;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -19,38 +15,30 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 	double sideLengthSquared;
 	PiChart chart;
 	Thread thread;
+	boolean isRunning = false;
 
-	@SuppressWarnings("deprecation")
 	public PiController(PiModel model, PiView view) {
 		super(model, view);
-		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Configuration c = sl.getConfiguration();
-		Translator t = sl.getTranslator();
 
 		sideLengthSquared = Math.pow(view.sideLength, 2);
-		
-		//Starts a new Thread
+
+		// Starts a new Thread
 		view.btnStart.setOnAction((event) -> {
+			this.isRunning = true;
 			this.lockButtons(true);
 
 			thread = new Thread(this);
 			thread.start();
 
 		});
-		
-		//Stops the Thread
+
+		// Stops the Thread
 		view.btnStop.setOnAction((event) -> {
-			thread.stop();
-			try {
-				thread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			isRunning = false;
 			this.lockButtons(false);
 		});
-		
-		//Adjusts the speed based on the slider position
+
+		// Adjusts the speed based on the slider position
 		view.slider.valueProperty().addListener((observable, oldvalue, newValue) -> {
 			model.speed = newValue.doubleValue();
 		});
@@ -66,8 +54,8 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			chart = new PiChart(model.totalPoints, model.piData);
 
 		});
-		
-		//Clears all the points from the GUI and model
+
+		// Clears all the points from the GUI and model
 		view.btnClear.setOnAction((event) -> {
 			this.clear();
 		});
@@ -98,7 +86,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			model.outOfCircle++;
 		}
 		model.totalPoints++;
-		
+
 		view.lblPiEstimate.setText(Double.toString(model.estimatePi()));
 
 	}
@@ -129,24 +117,23 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		return true;
 	}
 
+	// Creates a complete new window. Only deleting the points would result in lag
 	public void clear() {
+	
+		Stage stage = new Stage();
+		PiModel newModel = new PiModel();
+		PiView newView = new PiView(stage, new PiModel());
+		PiController newController = new PiController(newModel, newView);
+		newView.start();
+		view.stop();
 
-		// Deletes all the points on the pane
-		while (view.center.getChildren().size() > 2) {
-
-			view.center.getChildren().remove(2);
-		}
-		
-		model.resetVars();
-		
-		if(view.center.getChildren().size() > 2) {
-			clear();
-		}
 	}
+	
 
+	
 	@Override
 	public void run() {
-		while (true) {
+		while (this.isRunning) {
 			try {
 				// Determines the speed at which points are placed. Ranges from one point every
 				// second to one point every millisecond (based on slider position)

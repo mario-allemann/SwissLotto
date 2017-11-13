@@ -1,10 +1,8 @@
 package estimatingPI.chart;
 
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 public class PiChart {
@@ -29,6 +27,7 @@ public class PiChart {
 		
 		
 		lineChart.getData().add(piData.series);
+	
 		
 		Scene scene = new Scene(lineChart);
 		

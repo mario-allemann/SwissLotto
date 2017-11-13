@@ -1,7 +1,5 @@
 package estimatingPI.piMainView;
 
-import java.util.ArrayList;
-
 import estimatingPI.abstractClasses.Model;
 import estimatingPI.chart.PiChartData;
 
@@ -20,18 +18,5 @@ public class PiModel extends Model {
 		return piEstimate;
 	}
 
-	
-	
-	public double comparePi(double estimation) {
-		System.out.println(Math.PI);
-		return estimation/Math.PI;
-		
-		
-	}
-	
-	public void resetVars() {
-		this.outOfCircle = 0;
-		this.totalPoints = 0;
-	}
 
 }

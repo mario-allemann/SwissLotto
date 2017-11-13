@@ -85,9 +85,9 @@ public class PiView extends View<PiModel> {
 		VBox bottom1 = new VBox();
 		Label estimate = new Label(t.getString("mw.lblEstimate"));
 		lblPiEstimate = new Label();
-		Label lblEstimateAccuracy = new Label(t.getString("mw.lblAccuracy"));
+		Label lblPi = new Label(Double.toString(Math.PI));
 
-		bottom1.getChildren().addAll(estimate, lblPiEstimate, lblEstimateAccuracy);
+		bottom1.getChildren().addAll(estimate, lblPiEstimate, lblPi);
 
 		// Bottom 2: controls
 		HBox bottom2 = new HBox();
