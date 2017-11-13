@@ -27,8 +27,8 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		sideLengthSquared = Math.pow(view.sideLength, 2);
 
 		view.btnStart.setOnAction((event) -> {
-			this.setPoints(1000000);
-			System.out.println(model.estimatePi());
+			Thread thread = new Thread();
+			thread.start();
 			
 		});
 		
@@ -100,7 +100,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		this.setPoint(view.sideLength);
 		
 	}
 
