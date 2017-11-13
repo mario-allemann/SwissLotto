@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-public class PiController extends Controller<PiModel, PiView> {
+public class PiController extends Controller<PiModel, PiView> implements Runnable {
 
 	Random random = new Random();
 	double sideLengthSquared;
@@ -97,6 +97,11 @@ public class PiController extends Controller<PiModel, PiView> {
 
 		// If outside
 		return true;
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
