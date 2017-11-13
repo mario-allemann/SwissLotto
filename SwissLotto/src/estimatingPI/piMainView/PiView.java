@@ -29,6 +29,7 @@ public class PiView extends View<PiModel> {
 	Button btnStop;
 	Slider slider;
 	Button btnChart;
+	Button btnClear;
 		
 	//Center
 	Arc arc;
@@ -92,13 +93,22 @@ public class PiView extends View<PiModel> {
 		HBox bottom2 = new HBox();
 		btnStart = new Button(t.getString("mw.btnStart"));
 		btnStop = new Button(t.getString("mw.btnStop"));
+		
 		slider = new Slider(0, 1, 0.5);
 		btnChart = new Button(t.getString("mw.btnChart"));
+		
 
 		// TODO Add text to slider positions
 		slider.setShowTickLabels(true);
+		btnClear = new Button(t.getString("mw.btnClear"));
+		
+		//These buttons are locked by deafault
+		btnStop.setDisable(true);
+		btnChart.setDisable(true);
+		btnStop.setDisable(true);
+		btnClear.setDisable(true);
 
-		bottom2.getChildren().addAll(btnStart, btnStop, slider, btnChart);
+		bottom2.getChildren().addAll(btnStart, btnStop, slider, btnChart, btnClear);
 
 		// Bottom combined
 		VBox bottom = new VBox();

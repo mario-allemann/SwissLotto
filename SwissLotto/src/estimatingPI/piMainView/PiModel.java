@@ -13,9 +13,6 @@ public class PiModel extends Model {
 	
 	
 	public double estimatePi() {
-		System.out.println("Inside: " + (totalPoints - outOfCircle));
-		System.out.println("Outside: " + outOfCircle);
-		System.out.println("Total: " + totalPoints);
 		// 1.0* for an automatic double cast
 		double piEstimate =(4 * ((1.0 * totalPoints - outOfCircle) / totalPoints));
 		piData.addPoint(totalPoints, piEstimate);
@@ -30,6 +27,11 @@ public class PiModel extends Model {
 		return estimation/Math.PI;
 		
 		
+	}
+	
+	public void resetVars() {
+		this.outOfCircle = 0;
+		this.totalPoints = 0;
 	}
 
 }
