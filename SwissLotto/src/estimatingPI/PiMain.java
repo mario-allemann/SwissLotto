@@ -22,7 +22,6 @@ public class PiMain extends Application {
     private ServiceLocator serviceLocator; // resources, after initialization
 
     public static void main(String[] args) {
-    	
         launch(args);
     }
 
