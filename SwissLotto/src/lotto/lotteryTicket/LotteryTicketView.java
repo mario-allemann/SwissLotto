@@ -118,6 +118,8 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		bp.setRight(sp);
 		bp.setCenter(allNumbers);
 
+		
+		//Bottom
 		this.play = new Button(t.getString("lt.button"));
 		this.play.setDisable(true);
 		HBox hb = new HBox();
@@ -126,6 +128,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		bp.setBottom(hb);
 
 		Scene scene = new Scene(bp);
+		
 
 		return scene;
 	}
@@ -146,6 +149,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		return v;
 	}
 	
+	//Updates the GUI elements after the language gets changed
 	public void updateTexts() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
