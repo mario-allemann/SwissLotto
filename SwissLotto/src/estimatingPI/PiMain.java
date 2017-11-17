@@ -13,7 +13,13 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-
+/**
+ * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
+ * is licensed under the terms of the BSD 3-clause license (see the file
+ * license.txt).
+ * 
+ * @author Brad Richards
+ */
 public class PiMain extends Application {
     private static PiMain mainProgram; // singleton
     private Splash_View splashView;
@@ -85,6 +91,7 @@ public class PiMain extends Application {
     public void startApp() {
         Stage appStage = new Stage();
 
+        appStage.setTitle("PI");
         // Initialize the application MVC components. Note that these components
         // can only be initialized now, because they may depend on the
         // resources initialized by the splash screen

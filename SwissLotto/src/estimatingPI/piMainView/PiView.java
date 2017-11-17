@@ -1,6 +1,5 @@
 package estimatingPI.piMainView;
 
-
 import java.util.Locale;
 
 import estimatingPI.ServiceLocator;
@@ -25,9 +24,15 @@ import javafx.stage.Stage;
 
 public class PiView extends View<PiModel> {
 
+	// Top
+	MenuBar menuBar;
+	Menu menuOptions;
+	Menu menuOptionsLanguage;
+
 	// Bottom1:
+	Label lblEstimate;
 	Label lblPiEstimate;
-	Label lblAccuracy;
+	Label lblPi;
 
 	// Bottom2:
 	Button btnStart;
@@ -35,56 +40,53 @@ public class PiView extends View<PiModel> {
 	Slider slider;
 	Button btnChart;
 	Button btnClear;
-		
-	//Center
+
+	// Center
 	Arc arc;
 	Rectangle rectangle;
 	Pane center;
-	
+
 	double sideLength;
 
 	public PiView(Stage stage, PiModel model) {
 		super(stage, model);
-	
 
-		
 	}
 
 	@Override
 	protected Scene create_GUI() {
-	
-		
+
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 
 		BorderPane main = new BorderPane();
 		// Top: Menu Bar
-		MenuBar menuBar = new MenuBar();
-		Menu menuOption = new Menu(t.getString("program.menu.options"));
-		Menu menuOptionsLanguage = new Menu(t.getString("program.menu.options.language"));
-		menuOption.getItems().addAll(menuOptionsLanguage);
-		menuBar.getMenus().add(menuOption);
-	       for (Locale locale : sl.getLocales()) {
-	           MenuItem language = new MenuItem(locale.getLanguage());
-	           menuOptionsLanguage.getItems().add(language);
-	           language.setOnAction( event -> {
-					sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
-	                sl.setTranslator(new Translator(locale.getLanguage()));
-	                updateGUI();
-	            });
-	       }
-	       
-	    main.setTop(menuBar);
-		
-		
+		menuBar = new MenuBar();
+		menuOptions = new Menu(t.getString("mw.menu.options"));
+		menuOptionsLanguage = new Menu(t.getString("mw.menu.options.language"));
+		menuOptions.getItems().addAll(menuOptionsLanguage);
+
+		/**
+		 * @author Brad Richards
+		 */
+		menuBar.getMenus().add(menuOptions);
+		for (Locale locale : sl.getLocales()) {
+			MenuItem language = new MenuItem(locale.getLanguage());
+			menuOptionsLanguage.getItems().add(language);
+			language.setOnAction(event -> {
+				sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
+				sl.setTranslator(new Translator(locale.getLanguage()));
+				updateTexts();
+			});
+		}
+
+		main.setTop(menuBar);
 
 		// Center: Circle and Square
 		sideLength = 750;
 		center = new Pane();
 
-
-
-		//TODO Set these in constructor
+		// TODO Set these in constructor
 		arc = new Arc();
 		arc.setCenterX(0);
 		arc.setCenterY(0);
@@ -95,37 +97,34 @@ public class PiView extends View<PiModel> {
 		arc.setType(ArcType.ROUND);
 		arc.setFill(Color.ORANGE);
 
-
 		rectangle = new Rectangle(sideLength, sideLength);
 		rectangle.setFill(Color.LIGHTBLUE);
 
-		center.getChildren().addAll(rectangle,arc);
+		center.getChildren().addAll(rectangle, arc);
 		main.setCenter(center);
-		
-		
+
 		// Bottom 1: Pi estimation
 		VBox bottom1 = new VBox();
-		Label estimate = new Label(t.getString("mw.lblEstimate"));
+		lblEstimate = new Label(t.getString("mw.lblEstimate"));
 		lblPiEstimate = new Label();
-		Label lblPi = new Label(Double.toString(Math.PI));
+		lblPi = new Label(Double.toString(Math.PI));
 
-		bottom1.getChildren().addAll(estimate, lblPiEstimate, lblPi);
+		bottom1.getChildren().addAll(lblEstimate, lblPiEstimate, lblPi);
 
 		// Bottom 2: controls
 		HBox bottom2 = new HBox();
 		btnStart = new Button(t.getString("mw.btnStart"));
 		btnStop = new Button(t.getString("mw.btnStop"));
-		
+
 		slider = new Slider(0, 1, 0.5);
 		btnChart = new Button(t.getString("mw.btnChart"));
-		
 
 		// TODO Add text to slider positions
 		slider.setShowTickLabels(true);
-		
+
 		btnClear = new Button(t.getString("mw.btnClear"));
-		
-		//These buttons are locked by deafault
+
+		// These buttons are locked by deafault
 		btnStop.setDisable(true);
 		btnChart.setDisable(true);
 		btnStop.setDisable(true);
@@ -138,18 +137,26 @@ public class PiView extends View<PiModel> {
 		bottom.getChildren().addAll(bottom1, bottom2);
 
 		main.setBottom(bottom);
-		
-		
+
 		Scene scene = new Scene(main);
 
 		return scene;
 
 	}
-	
-	public void updateGUI() {
+
+	public void updateTexts() {
+
+		ServiceLocator sl = ServiceLocator.getServiceLocator();
+		Translator t = sl.getTranslator();
 		
+		menuOptions.setText(t.getString("mw.menu.options"));
+		menuOptionsLanguage.setText(t.getString("mw.menu.options.language"));
+		System.out.println(t.getString("mw.lblEstimate"));
+		lblEstimate.setText(t.getString("mw.lblEstimate"));
+		btnStart.setText(t.getString("mw.btnStart"));
+		btnStop.setText(t.getString("mw.btnStop"));
+		btnChart.setText(t.getString("mw.btnChart"));
+		btnClear.setText(t.getString("mw.btnClear"));
 	}
-	
-	
 
 }

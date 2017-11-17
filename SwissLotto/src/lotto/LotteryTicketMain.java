@@ -14,6 +14,14 @@ import lotto.lotteryTicket.LotteryTicketController;
 import lotto.lotteryTicket.LotteryTicketModel;
 import lotto.lotteryTicket.LotteryTicketView;
 
+
+/**
+ * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
+ * is licensed under the terms of the BSD 3-clause license (see the file
+ * license.txt).
+ * 
+ * @author Brad Richards
+ */
 public class LotteryTicketMain extends Application {
     private static LotteryTicketMain mainProgram; // singleton
     private Splash_View splashView;

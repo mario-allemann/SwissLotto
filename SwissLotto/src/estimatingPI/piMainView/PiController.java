@@ -16,7 +16,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 	PiChart chart;
 	Thread thread;
 	boolean isRunning = false;
-
+	
 	public PiController(PiModel model, PiView view) {
 		super(model, view);
 
@@ -47,11 +47,17 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		view.btnChart.setOnAction((event) -> {
 			// Stops points generation
 			view.btnStop.fire();
-			// Allows only one windows of chart to be open
+			// Allows only one window of chart to be open
 			if (chart != null) {
 				chart.stop();
 			}
-			chart = new PiChart(model.totalPoints, model.piData);
+			
+			if(model.maxPointsReached) {
+				chart = new PiChart(model.maxPlottablePoints, model.piData);
+			} else {
+				chart = new PiChart(model.totalPoints, model.piData);
+			}
+
 
 		});
 
@@ -144,8 +150,9 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			}
 			Platform.runLater(() -> {
 				this.setPoint(view.sideLength);
-
+						
 			});
+
 		}
 
 	}
