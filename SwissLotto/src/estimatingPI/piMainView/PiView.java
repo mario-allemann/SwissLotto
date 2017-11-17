@@ -1,12 +1,17 @@
 package estimatingPI.piMainView;
 
 
+import java.util.Locale;
+
 import estimatingPI.ServiceLocator;
 import estimatingPI.abstractClasses.View;
 import estimatingPI.commonClasses.Translator;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -54,6 +59,23 @@ public class PiView extends View<PiModel> {
 
 		BorderPane main = new BorderPane();
 		// Top: Menu Bar
+		MenuBar menuBar = new MenuBar();
+		Menu menuOption = new Menu(t.getString("program.menu.options"));
+		Menu menuOptionsLanguage = new Menu(t.getString("program.menu.options.language"));
+		menuOption.getItems().addAll(menuOptionsLanguage);
+		menuBar.getMenus().add(menuOption);
+	       for (Locale locale : sl.getLocales()) {
+	           MenuItem language = new MenuItem(locale.getLanguage());
+	           menuOptionsLanguage.getItems().add(language);
+	           language.setOnAction( event -> {
+					sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
+	                sl.setTranslator(new Translator(locale.getLanguage()));
+	                updateGUI();
+	            });
+	       }
+	       
+	    main.setTop(menuBar);
+		
 		
 
 		// Center: Circle and Square
@@ -100,6 +122,7 @@ public class PiView extends View<PiModel> {
 
 		// TODO Add text to slider positions
 		slider.setShowTickLabels(true);
+		
 		btnClear = new Button(t.getString("mw.btnClear"));
 		
 		//These buttons are locked by deafault
@@ -121,6 +144,10 @@ public class PiView extends View<PiModel> {
 
 		return scene;
 
+	}
+	
+	public void updateGUI() {
+		
 	}
 	
 	
