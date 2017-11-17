@@ -10,6 +10,9 @@ public class PiChartData {
 	public PiChartData() {
 		series = new XYChart.Series<>();
 		constantPI = new XYChart.Series<>();
+		series.setName("Estimate");
+		
+		constantPI.setName("Pi");
 		
 	}
 	
