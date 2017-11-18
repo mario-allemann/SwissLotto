@@ -98,7 +98,8 @@ public class ServiceLocator {
     
     public Pane getJackpotGIF(){
     	Pane p = new Pane();
-    	Image image = new Image(getClass().getResourceAsStream("/resources/jackpot.gif"));
+    	//GIF source: https://scpcrickettips.files.wordpress.com/2016/11/fran-aise-des-jeux-gagner-beaucoup-d-argent-avec-le-loto-urg0ew-clipart.gif
+    	Image image = new Image(getClass().getResourceAsStream("resources/jackpot.gif"));
     	p.getChildren().add(new ImageView(image));
     	return p;
     	
