@@ -3,10 +3,10 @@ package lotto.winScreen;
 import java.util.Random;
 import java.util.TreeSet;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lotto.ServiceLocator;
@@ -27,19 +27,21 @@ public class WinScreen {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 		VBox root = new VBox();
-
+		
+		root.getStylesheets().add(sl.getStylesheet());
+		root.getStyleClass().add("background");
+		
 		TreeSet<Integer> randNumbers = this.generateRandNumbers(model.getChooseNumber(), model.getMaxNumber());
 		TreeSet<Integer> randLucky = this.generateRandNumbers(model.getChooseLucky(), model.getMaxLucky());
 		
 		
 		
 		Label yourNumbers = new Label(t.getString("ws.label.yourNumbers"));
-		yourNumbers.setStyle("-fx-font-size: 40;");
 		
 		HBox numbers = this.createLabels(model.getChosenNumbers(), model.getChosenLuckys(), randNumbers, randLucky);
-		
+		yourNumbers.getStyleClass().add("label-normal");
 		Label theLottery = new Label(t.getString("ws.label.lotteryNumbers"));
-		theLottery.setStyle("-fx-font-size: 40;");
+		theLottery.getStyleClass().add("label-normal");
 		HBox lotteryDraw  = this.createLabels(randNumbers, randLucky, model.getChosenNumbers(), model.getChosenLuckys());
 
 		root.getChildren().addAll(yourNumbers, numbers, theLottery, lotteryDraw);
@@ -48,15 +50,20 @@ public class WinScreen {
 		stage.setScene(scene);
 
 		stage.show();
+		
+		
+		//Jackpot function
+		if(model.getChosenNumbers().equals(randNumbers) && model.getChosenLuckys().equals(randLucky)) {
+			System.out.println("Jackpot");
+			Pane p = sl.getJackpotGIF();
+			
+			Scene jackpotScene = new Scene(p);
+			Stage stage = new Stage();
+			stage.setScene(jackpotScene);
+			stage.show();
+		}
 	}
 
-	//Sets styling for all Labels in this screen
-	public Label designLabel(Label l) {
-		l.setMinWidth(75);
-		l.setAlignment(Pos.CENTER);
-		l.setStyle("-fx-font-size: 40;");
-		return l;
-	}
 
 	public TreeSet<Integer> generateRandNumbers(int number, int upperLimit) {
 		//
@@ -80,11 +87,11 @@ public class WinScreen {
 		
 		for(Integer i : numbers) {
 			Label l = new Label();
-			l = this.designLabel(l);
+			l.getStyleClass().add("label-normal");
 			l.setText(Integer.toString(i));
 			
 			if (otherNumbers.contains(i)) {
-				l.setStyle(l.getStyle() + "-fx-background-color: lime;");
+				l.getStyleClass().add("label-correct");
 			}
 
 			allNumbers.getChildren().add(l);
@@ -92,16 +99,16 @@ public class WinScreen {
 		}
 		
 		Label plus = new Label("+");
-		plus = this.designLabel(plus);
+		plus.getStyleClass().add("label-normal");
 		allNumbers.getChildren().add(plus);
 		
 		for(Integer i: luckyNumbers) {
 			Label l = new Label();
-			l = this.designLabel(l);
+			l.getStyleClass().add("label-normal");
 			l.setText(Integer.toString(i));
 			
 			if(otherLuckys.contains(i)) {
-				l.setStyle(l.getStyle() + "-fx-background-color: lime;");
+				l.getStyleClass().add("label-correct");
 			}
 			
 			allNumbers.getChildren().add(l);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.Model;
 
@@ -22,8 +23,8 @@ public class LotteryTicketModel extends Model{
 	
 	protected TreeSet<Integer> chosenNumbers = new TreeSet<Integer>();
 	protected TreeSet<Integer> chosenLuckys = new TreeSet<Integer>();
-	public ArrayList<Button> numberButtons = new ArrayList<Button>();
-	public ArrayList<Button> luckyNumberButtons = new ArrayList<Button>();
+	public ArrayList<ToggleButton> numberButtons = new ArrayList<ToggleButton>();
+	public ArrayList<ToggleButton> luckyNumberButtons = new ArrayList<ToggleButton>();
 	
 	
 	

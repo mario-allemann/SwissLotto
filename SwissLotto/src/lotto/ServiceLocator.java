@@ -1,8 +1,12 @@
 package lotto;
 
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import lotto.commonClasses.Configuration;
 import lotto.commonClasses.Translator;
 
@@ -86,5 +90,18 @@ public class ServiceLocator {
     
     public void setTranslator(Translator translator) {
         this.translator = translator;
+    }
+    
+    public String getStylesheet() {
+    	return getClass().getResource("style.css").toExternalForm();
+    }
+    
+    public Pane getJackpotGIF(){
+    	Pane p = new Pane();
+    	Image image = new Image(getClass().getResourceAsStream("/resources/jackpot.gif"));
+    	p.getChildren().add(new ImageView(image));
+    	return p;
+    	
+    	
     }
 }

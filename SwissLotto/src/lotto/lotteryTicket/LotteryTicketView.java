@@ -3,19 +3,25 @@ package lotto.lotteryTicket;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.View;
@@ -23,14 +29,18 @@ import lotto.commonClasses.Translator;
 
 public class LotteryTicketView extends View<LotteryTicketModel> {
 	
-
+	//TOP
 	Menu menuOptions;
 	Menu menuOptionsChangeLT;
 	Menu menuOptionsLanguage;
 
+	
+	
+	
 	TilePane numbers;
 	TilePane luckyNumbers;
-	Button play;
+	Button btnPlay;
+	Button btnChance;
 
 	VBox chances;
 
@@ -54,7 +64,8 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		Translator t = sl.getTranslator();
 
 		BorderPane bp = new BorderPane();
-		
+		bp.getStylesheets().add(sl.getStylesheet());
+		bp.getStyleClass().add("background");
 		
 		//Sets up the menu
 		MenuBar menuBar = new MenuBar();
@@ -80,9 +91,8 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		// Sets up the normal numbers
 		numbers = new TilePane();
 		for (int i = 1; i <= model.maxNumber; i++) {
-			Button number = new Button(Integer.toString(i));
-			number.setMinWidth(50);
-			number.setMinHeight(50);
+			ToggleButton number = new ToggleButton(Integer.toString(i));
+			number.getStyleClass().add("button-normal");
 			//TODO for some reason this arraylist only works in the model
 			model.numberButtons.add(number);
 			numbers.getChildren().add(number);
@@ -95,9 +105,10 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		// Sets up the lucky numbers
 		luckyNumbers = new TilePane();
 		for (int i = 1; i <= model.maxLucky; i++) {
-			Button luckyNumber = new Button(Integer.toString(i));
+			ToggleButton luckyNumber = new ToggleButton(Integer.toString(i));
 			
 			luckyNumber.setShape(new Circle(2));
+			luckyNumber.getStyleClass().add("button-normal");
 			luckyNumber.setMinWidth(50);
 			luckyNumber.setMinHeight(50);
 			model.luckyNumberButtons.add(luckyNumber);
@@ -111,43 +122,27 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		allNumbers.setSpacing(20);
 		allNumbers.getChildren().addAll(numbers, luckyNumbers);
 		
-		
-		chances = this.calculateChances();
-		ScrollPane sp = new ScrollPane();
-		sp.setContent(chances);
-		bp.setRight(sp);
 		bp.setCenter(allNumbers);
 
 		
-		//Bottom
-		this.play = new Button(t.getString("lt.button"));
-		this.play.setDisable(true);
+		//Bottom - controls
+		this.btnPlay = new Button(t.getString("lt.button"));
+		this.btnPlay.getStyleClass().add("control-button");
+		this.btnPlay.setDisable(true);
+		
+		this.btnChance = new Button(t.getString("lt.btnChance"));
+		this.btnChance.getStyleClass().add("control-button");
 		HBox hb = new HBox();
-		hb.getChildren().addAll(play);
-
+		hb.getChildren().addAll(btnPlay, btnChance);
 		bp.setBottom(hb);
-
+		
 		Scene scene = new Scene(bp);
 		
 
 		return scene;
 	}
 
-	//Iterates through all win-possibilites, calculates their chances and returns a VBox with labels
-	public VBox calculateChances() {
-		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Translator t = sl.getTranslator();
-		
-		VBox v = new VBox();
-		v.getChildren().add(new Label(t.getString("lt.chances")));
-		for(int normalNumber = model.chooseNumber; normalNumber >=0; normalNumber--) {
-			for(int luckyNumber = model.chooseLucky; luckyNumber>=0; luckyNumber--) {
-				String labelString = normalNumber + " + " + luckyNumber + "\t" + model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
-				v.getChildren().add(new Label(labelString));
-			}
-		}
-		return v;
-	}
+
 	
 	//Updates the GUI elements after the language gets changed
 	public void updateTexts() {
@@ -156,8 +151,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		menuOptions.setText(t.getString("program.menu.options"));
 		menuOptionsChangeLT.setText(t.getString("lt.menu.options.changeLT"));
 		menuOptionsLanguage.setText(t.getString("program.menu.options.language"));
-		play.setText(t.getString("lt.button"));
-		((Labeled) chances.getChildren().get(0)).setText(t.getString("lt.chances"));
+		btnPlay.setText(t.getString("lt.button"));
 		
 	}
 

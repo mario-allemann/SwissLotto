@@ -1,0 +1,38 @@
+.background{
+	-fx-background-color: #FEE9E9;
+}
+
+.button-normal{
+	-fx-font: 20 "Arial";
+	-fx-font-weight: bold;
+	-fx-background-color: white; 
+	-fx-stroke-width: 20;
+	-fx-text-fill: indianred ;
+	-fx-min-width: 50;
+	-fx-min-height: 50;
+}
+
+
+.button-clicked{
+	-fx-background-color: blue;
+	-fx-text-fill: white;
+}
+
+.control-button{
+	-fx-background-color: RED; 
+	-fx-font-size: 20; 
+	-fx-text-fill: WHITE;
+}
+
+/* win screen */
+
+.label-normal{
+		-fx-min-width: 75;
+		-fx-alignment: center;
+		-fx-font-size: 40;
+}
+
+.label-correct{
+	-fx-background-color: blue;
+	-fx-text-fill: white;
+}
