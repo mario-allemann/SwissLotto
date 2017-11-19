@@ -6,6 +6,5 @@ import lotto.abstractClasses.Model;
 
 public class ChangeLotteryTicketModel extends Model{
 	protected ArrayList<TextFieldWProperty> tfp = new ArrayList<TextFieldWProperty>();
-	public String closeValue;
 	
 }

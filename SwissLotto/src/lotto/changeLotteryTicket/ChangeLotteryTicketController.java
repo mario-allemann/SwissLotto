@@ -11,13 +11,13 @@ import lotto.lotteryTicket.*;
 
 public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicketModel, ChangeLotteryTicketView> {
 
-	public ChangeLotteryTicketController(ChangeLotteryTicketModel model, ChangeLotteryTicketView view) {
+	public ChangeLotteryTicketController(ChangeLotteryTicketModel model, ChangeLotteryTicketView view, LotteryTicketView ticketView) {
 		super(model, view);
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Configuration c = sl.getConfiguration();
 		Translator t = sl.getTranslator();
 		final int MAX_NUM_OF_BUTTONS = 100;
-
+		
 		view.save.setOnAction((event) -> {
 
 			ArrayList<Integer> userInputs = new ArrayList<Integer>();
@@ -56,7 +56,6 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 						return;
 					}
 
-					model.closeValue = "save";
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,15 +68,17 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 				c.setLocalOption(tf.property, tf.getText());
 			}
 
-			// Save config, create a new ticket and close window
+			// Save config, stop the old ticket, create a new one, and stop config view
 			c.save();
+			ticketView.stop();
 			this.createNewLotteryTicket();
 			view.stop();
+			
 
 		});
-
+		
+		//Stop the view do nothing else
 		view.cancel.setOnAction((event) -> {
-			model.closeValue = "cancel";
 			view.stop();
 		});
 	}

@@ -21,10 +21,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getCloseValue() {
-		return model.closeValue;
-	}
-
 
 
 	protected Button save;
@@ -54,8 +50,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 	@Override
 	protected Scene create_GUI() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Configuration c = sl.getConfiguration();
-		Logger logger = sl.getLogger();
 		Translator t = sl.getTranslator();
 
 

@@ -53,13 +53,8 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			Stage changeLTStage = new Stage();
 			ChangeLotteryTicketModel changeLTModel = new ChangeLotteryTicketModel();
 			ChangeLotteryTicketView changeLTView = new ChangeLotteryTicketView(changeLTStage, changeLTModel);
-			new ChangeLotteryTicketController(changeLTModel, changeLTView);
+			new ChangeLotteryTicketController(changeLTModel, changeLTView, view);
 			changeLTView.start();
-			changeLTView.getStage().setOnHidden((event2) -> {
-				if (changeLTView.getCloseValue().equals("save")) {
-					view.stop();
-				}
-			});
 		});
 
 		// Opens up a play menu
