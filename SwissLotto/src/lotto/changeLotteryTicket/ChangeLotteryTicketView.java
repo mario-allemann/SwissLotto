@@ -1,7 +1,5 @@
 package lotto.changeLotteryTicket;
 
-import java.util.logging.Logger;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

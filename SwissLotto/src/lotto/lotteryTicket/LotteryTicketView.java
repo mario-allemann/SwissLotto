@@ -3,25 +3,17 @@ package lotto.lotteryTicket;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.View;
@@ -60,7 +52,6 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 	@Override
 	protected Scene create_GUI() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Logger logger = sl.getLogger();
 		Translator t = sl.getTranslator();
 
 		BorderPane bp = new BorderPane();

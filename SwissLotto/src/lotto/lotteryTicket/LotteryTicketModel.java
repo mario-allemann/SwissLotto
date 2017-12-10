@@ -6,7 +6,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.Model;

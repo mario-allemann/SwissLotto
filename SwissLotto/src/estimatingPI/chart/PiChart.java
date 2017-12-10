@@ -3,7 +3,6 @@ package estimatingPI.chart;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart.Data;
 import javafx.stage.Stage;
 
 public class PiChart {
