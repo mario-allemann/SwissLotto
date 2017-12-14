@@ -25,26 +25,26 @@ import javafx.stage.Stage;
 public class PiView extends View<PiModel> {
 
 	// Top
-	MenuBar menuBar;
-	Menu menuOptions;
-	Menu menuOptionsLanguage;
+	protected MenuBar menuBar;
+	protected Menu menuOptions;
+	protected Menu menuOptionsLanguage;
 
 	// Bottom1:
-	Label lblEstimate;
-	Label lblPiEstimate;
-	Label lblPi;
+	protected Label lblEstimate;
+	protected Label lblPiEstimate;
+	protected Label lblPi;
 
 	// Bottom2:
-	Button btnStart;
-	Button btnStop;
-	Slider slider;
-	Button btnChart;
-	Button btnClear;
+	protected Button btnStart;
+	protected Button btnStop;
+	protected Slider slider;
+	protected Button btnChart;
+	protected Button btnClear;
 
 	// Center
-	Arc arc;
-	Rectangle rectangle;
-	Pane center;
+	protected Arc arc;
+	protected Rectangle rectangle;
+	protected Pane center;
 
 	double sideLength;
 
@@ -86,14 +86,7 @@ public class PiView extends View<PiModel> {
 		sideLength = 750;
 		center = new Pane();
 
-		// TODO Set these in constructor
-		arc = new Arc();
-		arc.setCenterX(0);
-		arc.setCenterY(0);
-		arc.setRadiusX(sideLength);
-		arc.setRadiusY(sideLength);
-		arc.setStartAngle(270);
-		arc.setLength(90);
+		arc = new Arc(0,0,sideLength,sideLength, 270,90);
 		arc.setType(ArcType.ROUND);
 		arc.setFill(Color.ORANGE);
 
@@ -103,6 +96,7 @@ public class PiView extends View<PiModel> {
 		center.getChildren().addAll(rectangle, arc);
 		main.setCenter(center);
 
+		
 		// Bottom 1: Pi estimation
 		VBox bottom1 = new VBox();
 		lblEstimate = new Label(t.getString("mw.lblEstimate"));
@@ -144,6 +138,7 @@ public class PiView extends View<PiModel> {
 
 	}
 
+	//Immediately updates the elements after the language gets changed
 	public void updateTexts() {
 
 		ServiceLocator sl = ServiceLocator.getServiceLocator();

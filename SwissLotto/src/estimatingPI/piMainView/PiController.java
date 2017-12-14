@@ -72,9 +72,6 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 	public void setPoint(double sideLength) {
 		double posX = random.nextDouble() * sideLength;
 		double posY = random.nextDouble() * sideLength;
-		// System.out.println("x: " + posX + "--->" + Math.pow(posX, 2));
-		// System.out.println("y: " + posY + "--->" + Math.pow(posY, 2));
-		// System.out.println("x2 + y2: " + Math.pow(posX, 2)+ Math.pow(posY, 2));
 
 		Circle circle = new Circle(posX, posY, 3);
 		circle.setFill(Color.RED);
@@ -145,7 +142,6 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 				// second to one point every millisecond (based on slider position)
 				Thread.sleep(1001 - (1000 * (int) model.speed));
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Platform.runLater(() -> {
