@@ -1,7 +1,6 @@
 package lotto.lotteryTicket;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,32 +19,25 @@ import lotto.abstractClasses.View;
 import lotto.commonClasses.Translator;
 
 public class LotteryTicketView extends View<LotteryTicketModel> {
-	
-	//TOP
-	Menu menuOptions;
-	Menu menuOptionsChangeLT;
-	Menu menuOptionsLanguage;
 
-	
-	
-	
-	TilePane numbers;
-	TilePane luckyNumbers;
-	Button btnPlay;
-	Button btnChance;
+	// TOP
+	protected Menu menuOptions;
+	protected Menu menuOptionsChangeLT;
+	protected Menu menuOptionsLanguage;
 
-	VBox chances;
+	protected TilePane numbers;
+	protected TilePane luckyNumbers;
+	protected Button btnPlay;
+	protected Button btnChance;
 
-
+	protected VBox chances;
 
 	public LotteryTicketView(Stage stage, LotteryTicketModel model) {
-		
+
 		super(stage, model);
 		stage.setTitle("LotteryTicket");
 
 		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
-		// TODO Auto-generated constructor stub
-		
 
 	}
 
@@ -57,23 +49,23 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		BorderPane bp = new BorderPane();
 		bp.getStylesheets().add(sl.getStylesheet());
 		bp.getStyleClass().add("background");
-		
-		//Sets up the menu
+
+		// Sets up the menu
 		MenuBar menuBar = new MenuBar();
 		menuOptions = new Menu(t.getString("program.menu.options"));
 		menuOptionsChangeLT = new Menu(t.getString("lt.menu.options.changeLT"));
 		menuOptionsLanguage = new Menu(t.getString("program.menu.options.language"));
 		menuOptions.getItems().addAll(menuOptionsChangeLT, menuOptionsLanguage);
-		
-	       for (Locale locale : sl.getLocales()) {
-	           MenuItem language = new MenuItem(locale.getLanguage());
-	           menuOptionsLanguage.getItems().add(language);
-	           language.setOnAction( event -> {
-					sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
-	                sl.setTranslator(new Translator(locale.getLanguage()));
-	                updateTexts();
-	            });
-	        }
+
+		for (Locale locale : sl.getLocales()) {
+			MenuItem language = new MenuItem(locale.getLanguage());
+			menuOptionsLanguage.getItems().add(language);
+			language.setOnAction(event -> {
+				sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
+				sl.setTranslator(new Translator(locale.getLanguage()));
+				updateTexts();
+			});
+		}
 
 		menuBar.getMenus().addAll(menuOptions);
 
@@ -84,20 +76,18 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		for (int i = 1; i <= model.maxNumber; i++) {
 			ToggleButton number = new ToggleButton(Integer.toString(i));
 			number.getStyleClass().add("button-normal");
-			//TODO for some reason this arraylist only works in the model
 			model.numberButtons.add(number);
 			numbers.getChildren().add(number);
 		}
 		numbers.setVgap(3.5);
 		numbers.setHgap(3.5);
 		numbers.setPrefColumns(6);
-		
-		
+
 		// Sets up the lucky numbers
 		luckyNumbers = new TilePane();
 		for (int i = 1; i <= model.maxLucky; i++) {
 			ToggleButton luckyNumber = new ToggleButton(Integer.toString(i));
-			
+
 			luckyNumber.setShape(new Circle(2));
 			luckyNumber.getStyleClass().add("button-normal");
 			luckyNumber.setMinWidth(50);
@@ -109,33 +99,29 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		luckyNumbers.setVgap(3.5);
 
 		VBox allNumbers = new VBox();
-		
+
 		allNumbers.setSpacing(20);
 		allNumbers.getChildren().addAll(numbers, luckyNumbers);
-		
+
 		bp.setCenter(allNumbers);
 
-		
-		//Bottom - controls
+		// Bottom - controls
 		this.btnPlay = new Button(t.getString("lt.button"));
 		this.btnPlay.getStyleClass().add("control-button");
 		this.btnPlay.setDisable(true);
-		
+
 		this.btnChance = new Button(t.getString("lt.btnChance"));
 		this.btnChance.getStyleClass().add("control-button");
 		HBox hb = new HBox();
 		hb.getChildren().addAll(btnPlay, btnChance);
 		bp.setBottom(hb);
-		
+
 		Scene scene = new Scene(bp);
-		
 
 		return scene;
 	}
 
-
-	
-	//Updates the GUI elements after the language gets changed
+	// Updates the GUI elements after the language gets changed
 	public void updateTexts() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
@@ -143,7 +129,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		menuOptionsChangeLT.setText(t.getString("lt.menu.options.changeLT"));
 		menuOptionsLanguage.setText(t.getString("program.menu.options.language"));
 		btnPlay.setText(t.getString("lt.button"));
-		
+
 	}
 
 }
