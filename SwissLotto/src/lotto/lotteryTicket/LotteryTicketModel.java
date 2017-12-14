@@ -22,8 +22,7 @@ public class LotteryTicketModel extends Model{
 	
 	protected TreeSet<Integer> chosenNumbers = new TreeSet<Integer>();
 	protected TreeSet<Integer> chosenLuckys = new TreeSet<Integer>();
-	public ArrayList<ToggleButton> numberButtons = new ArrayList<ToggleButton>();
-	public ArrayList<ToggleButton> luckyNumberButtons = new ArrayList<ToggleButton>();
+
 	
 	
 	

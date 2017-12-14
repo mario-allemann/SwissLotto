@@ -71,30 +71,14 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 
 		bp.setTop(menuBar);
 
-		// Sets up the normal numbers
+		
 		numbers = new TilePane();
-		for (int i = 1; i <= model.maxNumber; i++) {
-			ToggleButton number = new ToggleButton(Integer.toString(i));
-			number.getStyleClass().add("button-normal");
-			model.numberButtons.add(number);
-			numbers.getChildren().add(number);
-		}
 		numbers.setVgap(3.5);
 		numbers.setHgap(3.5);
 		numbers.setPrefColumns(6);
 
-		// Sets up the lucky numbers
+		
 		luckyNumbers = new TilePane();
-		for (int i = 1; i <= model.maxLucky; i++) {
-			ToggleButton luckyNumber = new ToggleButton(Integer.toString(i));
-
-			luckyNumber.setShape(new Circle(2));
-			luckyNumber.getStyleClass().add("button-normal");
-			luckyNumber.setMinWidth(50);
-			luckyNumber.setMinHeight(50);
-			model.luckyNumberButtons.add(luckyNumber);
-			luckyNumbers.getChildren().add(luckyNumber);
-		}
 		luckyNumbers.setHgap(3.5);
 		luckyNumbers.setVgap(3.5);
 

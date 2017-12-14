@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.Controller;
@@ -29,21 +30,47 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	private Stage oldStage;
 	private Stage chancesStage;
 	
+	public ArrayList<ToggleButton> numberButtons;
+	public ArrayList<ToggleButton> luckyNumberButtons;
 
 	public LotteryTicketController(LotteryTicketModel model, LotteryTicketView view) {
 				
 		super(model, view);
 		
 		
+		
 
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 		
+		numberButtons = new ArrayList<ToggleButton>();
+		luckyNumberButtons = new ArrayList<ToggleButton>();
+		
+		// Sets up the normal numbers
+		for (int i = 1; i <= model.maxNumber; i++) {
+			ToggleButton number = new ToggleButton(Integer.toString(i));
+			number.getStyleClass().add("button-normal");
+			numberButtons.add(number);
+			view.numbers.getChildren().add(number);
+		}
+		// Sets up the lucky numbers
+		for (int i = 1; i <= model.maxLucky; i++) {
+			ToggleButton luckyNumber = new ToggleButton(Integer.toString(i));
+
+			luckyNumber.setShape(new Circle(2));
+			luckyNumber.getStyleClass().add("button-normal");
+			luckyNumber.setMinWidth(50);
+			luckyNumber.setMinHeight(50);
+			luckyNumberButtons.add(luckyNumber);
+			view.luckyNumbers.getChildren().add(luckyNumber);
+		}
 		
 		
-		this.addActionEvent(model.numberButtons, numberCount, model.chooseNumber, model.chosenNumbers,
+		
+		
+		this.addActionEvent(numberButtons, numberCount, model.chooseNumber, model.chosenNumbers,
 				this.buttonsLocked);
-		this.addActionEvent(model.luckyNumberButtons, luckyCount, model.chooseLucky, model.chosenLuckys,
+		this.addActionEvent(luckyNumberButtons, luckyCount, model.chooseLucky, model.chosenLuckys,
 				this.luckyButtonsLocked);
 
 		// Opens up a menu which allows the user to modify the lottery ticket
