@@ -1,5 +1,6 @@
 package lotto.changeLotteryTicket;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +30,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 	//Sets up a row with Label and Textfield to change the configs
 	public void setConfigTF(String translatorKey, String configKey) {
 		
-		//TODO change architecture to only create one servicelocator,config,translator per class
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		
 		Configuration c = sl.getConfiguration();
@@ -38,9 +38,11 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 		Label l = new Label(t.getString(translatorKey));
 		//Basically a TextField that holds the configKey as additional information
 		TextFieldWProperty tf = new TextFieldWProperty(c.getOption(configKey), configKey);
+		tf.setMaxWidth(75);
 		model.tfp.add(tf);
 		HBox hb = new HBox();
-		
+		hb.setAlignment(Pos.BASELINE_RIGHT);
+		hb.setSpacing(20);
 		hb.getChildren().addAll(l, tf);
 		this.vb.getChildren().addAll(hb);
 	}
