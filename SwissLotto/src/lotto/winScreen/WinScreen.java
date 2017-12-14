@@ -47,7 +47,6 @@ public class WinScreen {
 
 		// Jackpot function
 		if (model.getChosenNumbers().equals(randNumbers) && model.getChosenLuckys().equals(randLucky)) {
-			System.out.println("Jackpot");
 			Pane p = sl.getJackpotGIF();
 
 			Scene jackpotScene = new Scene(p);
@@ -58,18 +57,16 @@ public class WinScreen {
 
 		}
 	}
-
+	//Generates the lottery draw
 	public TreeSet<Integer> generateRandNumbers(int number, int upperLimit) {
-
 		TreeSet<Integer> ts = new TreeSet<Integer>();
-
 		while (ts.size() < number) {
 			ts.add(rand.nextInt(upperLimit) + 1);
 		}
 
 		return ts;
 	}
-
+	//Compares the numbers with the lottery numbers and highlights the matches
 	public HBox createLabels(TreeSet<Integer> numbers, TreeSet<Integer> luckyNumbers, TreeSet<Integer> otherNumbers,
 			TreeSet<Integer> otherLuckys) {
 		HBox allNumbers = new HBox();
