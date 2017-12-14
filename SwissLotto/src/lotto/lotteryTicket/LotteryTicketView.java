@@ -25,8 +25,11 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 	protected Menu menuOptionsChangeLT;
 	protected Menu menuOptionsLanguage;
 
+	// CENTER
 	protected TilePane numbers;
 	protected TilePane luckyNumbers;
+
+	// BOTTOM
 	protected Button btnPlay;
 	protected Button btnChance;
 
@@ -57,6 +60,9 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		menuOptionsLanguage = new Menu(t.getString("program.menu.options.language"));
 		menuOptions.getItems().addAll(menuOptionsChangeLT, menuOptionsLanguage);
 
+		/**
+		 * @author Brad Richards
+		 */
 		for (Locale locale : sl.getLocales()) {
 			MenuItem language = new MenuItem(locale.getLanguage());
 			menuOptionsLanguage.getItems().add(language);
@@ -71,13 +77,12 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 
 		bp.setTop(menuBar);
 
-		
+		// CENTER - the numbers
 		numbers = new TilePane();
 		numbers.setVgap(3.5);
 		numbers.setHgap(3.5);
 		numbers.setPrefColumns(6);
 
-		
 		luckyNumbers = new TilePane();
 		luckyNumbers.setHgap(3.5);
 		luckyNumbers.setVgap(3.5);

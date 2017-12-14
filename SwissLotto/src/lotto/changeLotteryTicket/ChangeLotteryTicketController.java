@@ -11,13 +11,14 @@ import lotto.lotteryTicket.*;
 
 public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicketModel, ChangeLotteryTicketView> {
 
-	public ChangeLotteryTicketController(ChangeLotteryTicketModel model, ChangeLotteryTicketView view, LotteryTicketView ticketView) {
+	public ChangeLotteryTicketController(ChangeLotteryTicketModel model, ChangeLotteryTicketView view,
+			LotteryTicketView ticketView) {
 		super(model, view);
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Configuration c = sl.getConfiguration();
 		Translator t = sl.getTranslator();
 		final int MAX_NUM_OF_BUTTONS = 100;
-		
+
 		view.save.setOnAction((event) -> {
 
 			ArrayList<Integer> userInputs = new ArrayList<Integer>();
@@ -56,7 +57,6 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 						return;
 					}
 
-
 				} catch (Exception e) {
 					e.printStackTrace();
 
@@ -73,17 +73,14 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 			ticketView.stop();
 			this.createNewLotteryTicket();
 			view.stop();
-			
 
 		});
-		
-		//Stop the view do nothing else
+
+		// Stop the view do nothing else
 		view.cancel.setOnAction((event) -> {
 			view.stop();
 		});
 	}
-
-
 
 	// Creates a new lottery ticket
 	public void createNewLotteryTicket() {

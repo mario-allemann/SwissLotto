@@ -86,7 +86,7 @@ public class PiView extends View<PiModel> {
 		sideLength = 750;
 		center = new Pane();
 
-		arc = new Arc(0,0,sideLength,sideLength, 270,90);
+		arc = new Arc(0, 0, sideLength, sideLength, 270, 90);
 		arc.setType(ArcType.ROUND);
 		arc.setFill(Color.ORANGE);
 
@@ -96,7 +96,6 @@ public class PiView extends View<PiModel> {
 		center.getChildren().addAll(rectangle, arc);
 		main.setCenter(center);
 
-		
 		// Bottom 1: Pi estimation
 		VBox bottom1 = new VBox();
 		lblEstimate = new Label(t.getString("mw.lblEstimate"));
@@ -138,12 +137,12 @@ public class PiView extends View<PiModel> {
 
 	}
 
-	//Immediately updates the elements after the language gets changed
+	// Immediately updates the elements after the language gets changed
 	public void updateTexts() {
 
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
-		
+
 		menuOptions.setText(t.getString("mw.menu.options"));
 		menuOptionsLanguage.setText(t.getString("mw.menu.options.language"));
 		System.out.println(t.getString("mw.lblEstimate"));

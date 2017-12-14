@@ -29,23 +29,20 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 
 	private Stage oldStage;
 	private Stage chancesStage;
-	
+
 	public ArrayList<ToggleButton> numberButtons;
 	public ArrayList<ToggleButton> luckyNumberButtons;
 
 	public LotteryTicketController(LotteryTicketModel model, LotteryTicketView view) {
-				
+
 		super(model, view);
-		
-		
-		
 
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
-		
+
 		numberButtons = new ArrayList<ToggleButton>();
 		luckyNumberButtons = new ArrayList<ToggleButton>();
-		
+
 		// Sets up the normal numbers
 		for (int i = 1; i <= model.maxNumber; i++) {
 			ToggleButton number = new ToggleButton(Integer.toString(i));
@@ -64,12 +61,8 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			luckyNumberButtons.add(luckyNumber);
 			view.luckyNumbers.getChildren().add(luckyNumber);
 		}
-		
-		
-		
-		
-		this.addActionEvent(numberButtons, numberCount, model.chooseNumber, model.chosenNumbers,
-				this.buttonsLocked);
+
+		this.addActionEvent(numberButtons, numberCount, model.chooseNumber, model.chosenNumbers, this.buttonsLocked);
 		this.addActionEvent(luckyNumberButtons, luckyCount, model.chooseLucky, model.chosenLuckys,
 				this.luckyButtonsLocked);
 
@@ -93,10 +86,10 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			WinScreen winScreen = new WinScreen(model);
 			this.oldStage = winScreen.getStage();
 		});
-		
-		//Shows the chances
-		view.btnChance.setOnAction((event) ->{
-			if(this.chancesStage != null) {
+
+		// Shows the chances
+		view.btnChance.setOnAction((event) -> {
+			if (this.chancesStage != null) {
 				this.chancesStage.close();
 			}
 			VBox main = this.calculateChances();
@@ -107,9 +100,8 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			this.chancesStage.setTitle(t.getString("lt.chances"));
 			this.chancesStage.show();
 
-			
 		});
-		//Changes language
+		// Changes language
 		view.menuOptionsLanguage.setOnAction((event) -> {
 			view.updateTexts();
 		});
@@ -145,7 +137,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 					b.getStyleClass().add("button-clicked");
 					count.incrementAndGet();
 
-					// If the button already got selected  and ist clicked once again, change
+					// If the button already got selected and ist clicked once again, change
 					// color to default
 				} else {
 					b.getStyleClass().remove("button-clicked");
@@ -219,15 +211,16 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			view.btnPlay.setDisable(true);
 		}
 	}
-	
-	
-	//Iterates through all win-possibilites, calculates their chances and returns a VBox with labels
+
+	// Iterates through all win-possibilites, calculates their chances and returns a
+	// VBox with labels
 	public VBox calculateChances() {
 		VBox v = new VBox();
 
-		for(int normalNumber = model.chooseNumber; normalNumber >=0; normalNumber--) {
-			for(int luckyNumber = model.chooseLucky; luckyNumber>=0; luckyNumber--) {
-				String labelString = normalNumber + " + " + luckyNumber + "\t" + model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
+		for (int normalNumber = model.chooseNumber; normalNumber >= 0; normalNumber--) {
+			for (int luckyNumber = model.chooseLucky; luckyNumber >= 0; luckyNumber--) {
+				String labelString = normalNumber + " + " + luckyNumber + "\t"
+						+ model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
 				v.getChildren().add(new Label(labelString));
 			}
 		}

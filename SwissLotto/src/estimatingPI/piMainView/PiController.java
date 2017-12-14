@@ -16,7 +16,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 	PiChart chart;
 	Thread thread;
 	boolean isRunning = false;
-	
+
 	public PiController(PiModel model, PiView view) {
 		super(model, view);
 
@@ -51,13 +51,12 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			if (chart != null) {
 				chart.stop();
 			}
-			
-			if(model.maxPointsReached) {
+
+			if (model.maxPointsReached) {
 				chart = new PiChart(model.maxPlottablePoints, model.piData);
 			} else {
 				chart = new PiChart(model.totalPoints, model.piData);
 			}
-
 
 		});
 
@@ -122,7 +121,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 
 	// Creates a complete new window. Only deleting the points would result in lag
 	public void clear() {
-	
+
 		Stage stage = new Stage();
 		PiModel newModel = new PiModel();
 		PiView newView = new PiView(stage, new PiModel());
@@ -131,9 +130,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		view.stop();
 
 	}
-	
 
-	
 	@Override
 	public void run() {
 		while (this.isRunning) {
@@ -146,7 +143,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			}
 			Platform.runLater(() -> {
 				this.setPoint(view.sideLength);
-						
+
 			});
 
 		}
