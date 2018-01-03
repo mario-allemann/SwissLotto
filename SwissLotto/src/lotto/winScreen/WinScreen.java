@@ -12,7 +12,11 @@ import javafx.stage.Stage;
 import lotto.ServiceLocator;
 import lotto.commonClasses.Translator;
 import lotto.lotteryTicket.LotteryTicketModel;
-
+/**
+ * Highlights the numbers of the lottery. Shows a special jackpot-screen
+ * @author Mario
+ *
+ */
 public class WinScreen {
 
 	private Random rand = new Random();

@@ -13,11 +13,17 @@ import lotto.abstractClasses.View;
 import lotto.commonClasses.Configuration;
 import lotto.commonClasses.Translator;
 
+/**
+ * With this window the user can change the properties of the lottery ticket.
+ * E.g. increasing the numbers on the lottery ticket
+ * 
+ * @author Mario
+ *
+ */
 public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 
 	public ChangeLotteryTicketView(Stage stage, ChangeLotteryTicketModel model) {
 		super(stage, model);
-		// TODO Auto-generated constructor stub
 	}
 
 	protected Button save;

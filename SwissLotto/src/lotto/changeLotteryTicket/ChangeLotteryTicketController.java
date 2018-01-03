@@ -14,11 +14,13 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 	public ChangeLotteryTicketController(ChangeLotteryTicketModel model, ChangeLotteryTicketView view,
 			LotteryTicketView ticketView) {
 		super(model, view);
+		
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Configuration c = sl.getConfiguration();
 		Translator t = sl.getTranslator();
 		final int MAX_NUM_OF_BUTTONS = 100;
-
+		
+		//Adds an event on the save button, which checks the user input against some false values
 		view.save.setOnAction((event) -> {
 
 			ArrayList<Integer> userInputs = new ArrayList<Integer>();
@@ -40,7 +42,7 @@ public class ChangeLotteryTicketController extends Controller<ChangeLotteryTicke
 				view.notification.setText(t.getString("cLT.label.notification.totalNumbesTooSmall"));
 				return;
 			}
-
+			
 			for (Integer i : userInputs) {
 
 				try {
