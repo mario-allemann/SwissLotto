@@ -29,19 +29,19 @@ public class PiView extends View<PiModel> {
 	protected Menu menuOptions;
 	protected Menu menuOptionsLanguage;
 
-	// Bottom1:
+	// Bottom1: PI estimation
 	protected Label lblEstimate;
 	protected Label lblPiEstimate;
 	protected Label lblPi;
 
-	// Bottom2:
+	// Bottom2: Control buttons
 	protected Button btnStart;
 	protected Button btnStop;
 	protected Slider slider;
 	protected Button btnChart;
 	protected Button btnClear;
 
-	// Center
+	// Center: A visualisation 
 	protected Arc arc;
 	protected Rectangle rectangle;
 	protected Pane center;

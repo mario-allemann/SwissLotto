@@ -9,9 +9,13 @@ public class PiModel extends Model {
 	protected double speed;
 	protected PiChartData piData = new PiChartData();
 
-	protected int maxPlottablePoints = 7500;
+	protected final int MAXPLOTTABLEPOINTS = 7500;
 	protected boolean maxPointsReached = false;
 
+	/**
+	 * Given the points on the pane, estimate PI
+	 * @return A estimation of PI
+	 */
 	public double estimatePi() {
 		// 1.0* for an automatic double cast
 		double piEstimate = (4 * ((1.0 * totalPoints - outOfCircle) / totalPoints));
@@ -21,7 +25,7 @@ public class PiModel extends Model {
 		if (!maxPointsReached) {
 			piData.addPoint(totalPoints, piEstimate);
 
-			if (totalPoints > maxPlottablePoints) {
+			if (totalPoints > MAXPLOTTABLEPOINTS) {
 				maxPointsReached = true;
 			}
 		}

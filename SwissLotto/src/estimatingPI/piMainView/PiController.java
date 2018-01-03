@@ -53,7 +53,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 			}
 
 			if (model.maxPointsReached) {
-				chart = new PiChart(model.maxPlottablePoints, model.piData);
+				chart = new PiChart(model.MAXPLOTTABLEPOINTS, model.piData);
 			} else {
 				chart = new PiChart(model.totalPoints, model.piData);
 			}
@@ -67,11 +67,16 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 
 	}
 
-	// Sets a single point on the pane
+	/**
+	 * Sets a single random point on the pane
+	 * 
+	 * @param sideLength
+	 */
 	public void setPoint(double sideLength) {
 		double posX = random.nextDouble() * sideLength;
 		double posY = random.nextDouble() * sideLength;
 
+		// The "point"
 		Circle circle = new Circle(posX, posY, 3);
 		circle.setFill(Color.RED);
 
@@ -84,6 +89,7 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 
 		view.center.getChildren().add(circle);
 
+		// Logic
 		if (isOutside) {
 			model.outOfCircle++;
 		}
@@ -93,8 +99,12 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 
 	}
 
-	// Locks or unlocks the buttons, depending on whether or not the thread is
-	// running
+	/**
+	 * Locks or unlocks the buttons, depending on whether or not the thread is
+	 * running
+	 * 
+	 * @param isRunning The status of the Thread
+	 */
 	public void lockButtons(boolean isRunning) {
 		view.btnStart.setDisable(isRunning);
 		view.btnStop.setDisable(!isRunning);
@@ -102,13 +112,12 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		view.btnClear.setDisable(isRunning);
 	}
 
-	public void setPoints(int number) {
-		for (int i = 0; i < number; i++) {
-			this.setPoint(view.sideLength);
-		}
-
-	}
-
+	/**
+	 * Determines whether or not the random point is within the circle or not
+	 * @param x The x position of the point
+	 * @param y The y position of the point
+	 * @return true if the point is outside, false if it isn't
+	 */
 	public boolean isOutsideCircle(double x, double y) {
 		// If point is inside
 		if ((Math.pow(x, 2) + Math.pow(y, 2)) < sideLengthSquared) {
@@ -119,7 +128,9 @@ public class PiController extends Controller<PiModel, PiView> implements Runnabl
 		return true;
 	}
 
-	// Creates a complete new window. Only deleting the points would result in lag
+	/**
+	 * Creates a complete new window. Only deleting the points would result in lag
+	 */
 	public void clear() {
 
 		Stage stage = new Stage();
