@@ -2,8 +2,6 @@ package lotto.lotteryTicket;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,16 +20,16 @@ import lotto.winScreen.WinScreen;
 public class LotteryTicketController extends Controller<LotteryTicketModel, LotteryTicketView> {
 	private String cssClicked;
 
-	private AtomicInteger numberCount = new AtomicInteger(0);
-	private AtomicInteger luckyCount = new AtomicInteger(0);
-	private AtomicBoolean buttonsLocked = new AtomicBoolean(false);
-	private AtomicBoolean luckyButtonsLocked = new AtomicBoolean(false);
+	private int normalCount = 0;
+	private int luckyCount = 0;
+	private boolean normalsLocked = false;
+	private boolean luckysLocked = false;
 
 	private Stage oldStage;
 	private Stage chancesStage;
 
-	public ArrayList<ToggleButton> numberButtons;
-	public ArrayList<ToggleButton> luckyNumberButtons;
+	public ArrayList<ToggleButton> normalButtons;
+	public ArrayList<ToggleButton> luckyButtons;
 
 	public LotteryTicketController(LotteryTicketModel model, LotteryTicketView view) {
 
@@ -40,14 +38,14 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Translator t = sl.getTranslator();
 
-		numberButtons = new ArrayList<ToggleButton>();
-		luckyNumberButtons = new ArrayList<ToggleButton>();
+		normalButtons = new ArrayList<ToggleButton>();
+		luckyButtons = new ArrayList<ToggleButton>();
 
 		// Sets up the normal numbers
 		for (int i = 1; i <= model.maxNumber; i++) {
 			ToggleButton number = new ToggleButton(Integer.toString(i));
 			number.getStyleClass().add("button-normal");
-			numberButtons.add(number);
+			normalButtons.add(number);
 			view.numbers.getChildren().add(number);
 		}
 		// Sets up the lucky numbers
@@ -58,13 +56,12 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			luckyNumber.getStyleClass().add("button-normal");
 			luckyNumber.setMinWidth(50);
 			luckyNumber.setMinHeight(50);
-			luckyNumberButtons.add(luckyNumber);
+			luckyButtons.add(luckyNumber);
 			view.luckyNumbers.getChildren().add(luckyNumber);
 		}
 
-		this.addActionEvent(numberButtons, numberCount, model.chooseNumber, model.chosenNumbers, this.buttonsLocked);
-		this.addActionEvent(luckyNumberButtons, luckyCount, model.chooseLucky, model.chosenLuckys,
-				this.luckyButtonsLocked);
+		this.addActionEventNormal();
+		this.addActionEventLuckys();
 
 		// Opens up a menu which allows the user to modify the lottery ticket
 		view.menuOptionsChangeLT.setOnAction((event) -> {
@@ -109,55 +106,83 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	}
 
 	/**
-	 * Adds ActionEvents on buttons to change color and lock them if too many get
-	 * selected
+	 * Adds ActionEvents on the lucky buttons to change color and lock them if too
+	 * many get selected
 	 * 
-	 * @param bArr
-	 *            An ArrayList with buttons
-	 * @param count
-	 *            How many buttons have been clicked on
-	 * @param maxClickableButtons
-	 *            The amount of buttons which can be clicked before they get locked
-	 * @param numbers
-	 *            A container for the user selection
-	 * @param areButtonsLocked
-	 *            true if the buttons are disabled, false if they are activated
 	 */
-	public void addActionEvent(ArrayList<ToggleButton> bArr, AtomicInteger count, int maxClickableButtons,
-			TreeSet<Integer> numbers, AtomicBoolean areButtonsLocked) {
-		for (ToggleButton b : bArr) {
+	public void addActionEventNormal() {
+		for (ToggleButton b : normalButtons) {
 
 			b.setOnAction((event) -> {
-				System.out.println("in event");
-				System.out.println(b.isSelected());
 				// If the button got selected change its color
 				if (b.isSelected()) {
-					System.out.println("set style blue");
 					b.setStyle(cssClicked);
 					b.getStyleClass().add("button-clicked");
-					count.incrementAndGet();
+					normalCount++;
 
 					// If the button already got selected and ist clicked once again, change
 					// color to default
 				} else {
 					b.getStyleClass().remove("button-clicked");
 					b.getStyleClass().add("button-normal");
-					count.decrementAndGet();
+					normalCount--;
 
 				}
 				// Lock the buttons if too many have been clicked
-				if (count.get() >= maxClickableButtons) {
-					System.out.println("max reached");
-					lockButtons(bArr, numbers);
-					areButtonsLocked.set(true);
+				if (normalCount >= model.maxChooseNormal) {
+					lockButtons(normalButtons, model.chosenNumbers);
+					normalsLocked = true;
 					playButtonActivation();
 
 				}
 				// If a user has selected the max number of buttons and deselects a button,
 				// unlock the other buttons to allow the user to select a new one
-				if (count.get() < maxClickableButtons) {
-					unlockButtons(bArr);
-					areButtonsLocked.set(false);
+				if (normalCount < model.maxChooseNormal) {
+					unlockButtons(normalButtons);
+					normalsLocked = false;
+					playButtonActivation();
+				}
+			});
+
+		}
+
+	}
+
+	/**
+	 * Adds ActionEvents on the normal buttons to change color and lock them if too
+	 * many get selected
+	 * 
+	 */
+	public void addActionEventLuckys() {
+		for (ToggleButton b : luckyButtons) {
+
+			b.setOnAction((event) -> {
+				// If the button got selected change its color
+				if (b.isSelected()) {
+					b.setStyle(cssClicked);
+					b.getStyleClass().add("button-clicked");
+					luckyCount++;
+
+					// If the button already got selected and ist clicked once again, change
+					// color to default
+				} else {
+					b.getStyleClass().remove("button-clicked");
+					b.getStyleClass().add("button-luckys");
+					luckyCount--;
+
+				}
+				// Lock the buttons if too many have been clicked
+				if (luckyCount >= model.maxChooseLucky) {
+					lockButtons(luckyButtons, model.chosenLuckys);
+					luckysLocked = true;
+					playButtonActivation();
+
+				}
+				// If a user has selected the max number of buttons and deselects a button,
+				// unlock the other buttons to allow the user to select a new one
+				if (luckyCount < model.maxChooseLucky) {
+					unlockButtons(luckyButtons);
+					luckysLocked = false;
 					playButtonActivation();
 				}
 			});
@@ -170,7 +195,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	 * Locks all buttons which are not selected, saves the selected numbers to a
 	 * TreeSet
 	 * 
-	 * @param bArray
+	 * @param numberCountay
 	 *            An ArrayList with buttons
 	 * @param numbers
 	 *            A container for the user selection
@@ -204,8 +229,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	// Checks if the required amount of buttons got selected in order to start the
 	// draw (unlock the play Button)
 	private void playButtonActivation() {
-		System.out.println(this.buttonsLocked.toString() + this.luckyButtonsLocked);
-		if (this.buttonsLocked.get() && this.luckyButtonsLocked.get()) {
+		if (normalsLocked && luckysLocked) {
 			view.btnPlay.setDisable(false);
 		} else {
 			view.btnPlay.setDisable(true);
@@ -217,8 +241,8 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	public VBox calculateChances() {
 		VBox v = new VBox();
 
-		for (int normalNumber = model.chooseNumber; normalNumber >= 0; normalNumber--) {
-			for (int luckyNumber = model.chooseLucky; luckyNumber >= 0; luckyNumber--) {
+		for (int normalNumber = model.maxChooseNormal; normalNumber >= 0; normalNumber--) {
+			for (int luckyNumber = model.maxChooseLucky; luckyNumber >= 0; luckyNumber--) {
 				String labelString = normalNumber + " + " + luckyNumber + "\t"
 						+ model.getChanceAsPercentage(normalNumber, luckyNumber) + "%";
 				v.getChildren().add(new Label(labelString));

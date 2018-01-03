@@ -15,9 +15,9 @@ public class LotteryTicketModel extends Model {
 
 	// Loads all the information relevant for the lottery ticket from the config
 	// file
-	protected int chooseNumber = Integer.parseInt(sl.getConfiguration().getOption("ChooseNumber"));
+	protected int maxChooseNormal = Integer.parseInt(sl.getConfiguration().getOption("ChooseNumber"));
 	protected int maxNumber = Integer.parseInt(sl.getConfiguration().getOption("MaxNumber"));
-	protected int chooseLucky = Integer.parseInt(sl.getConfiguration().getOption("ChooseLucky"));
+	protected int maxChooseLucky = Integer.parseInt(sl.getConfiguration().getOption("ChooseLucky"));
 	protected int maxLucky = Integer.parseInt(sl.getConfiguration().getOption("MaxLucky"));
 
 	protected TreeSet<Integer> chosenNumbers = new TreeSet<Integer>();
@@ -74,8 +74,8 @@ public class LotteryTicketModel extends Model {
 	 */
 	public String getChanceAsPercentage(int pickedCorrectNormal, int pickedCorrectLuckys) {
 
-		BigDecimal normalChance = getChance(pickedCorrectNormal, this.chooseNumber, this.maxNumber);
-		BigDecimal luckyChance = getChance(pickedCorrectLuckys, this.chooseLucky, this.maxLucky);
+		BigDecimal normalChance = getChance(pickedCorrectNormal, this.maxChooseNormal, this.maxNumber);
+		BigDecimal luckyChance = getChance(pickedCorrectLuckys, this.maxChooseLucky, this.maxLucky);
 
 		return (normalChance.multiply(luckyChance).multiply(BigDecimal.valueOf(100)).toPlainString()).substring(0, 15);
 
@@ -99,11 +99,11 @@ public class LotteryTicketModel extends Model {
 	// GETTERS AND SETTERS
 
 	public int getChooseNumber() {
-		return chooseNumber;
+		return maxChooseNormal;
 	}
 
 	public void setChooseNumber(int chooseNumber) {
-		this.chooseNumber = chooseNumber;
+		this.maxChooseNormal = chooseNumber;
 	}
 
 	public int getMaxNumber() {
@@ -115,11 +115,11 @@ public class LotteryTicketModel extends Model {
 	}
 
 	public int getChooseLucky() {
-		return chooseLucky;
+		return maxChooseLucky;
 	}
 
 	public void setChooseLucky(int chooseLucky) {
-		this.chooseLucky = chooseLucky;
+		this.maxChooseLucky = chooseLucky;
 	}
 
 	public int getMaxLucky() {
