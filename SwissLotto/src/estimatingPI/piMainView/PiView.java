@@ -29,6 +29,11 @@ public class PiView extends View<PiModel> {
 	protected Menu menuOptions;
 	protected Menu menuOptionsLanguage;
 
+	// Center: A visualisation
+	protected Arc arc;
+	protected Rectangle rectangle;
+	protected Pane center;
+
 	// Bottom1: PI estimation
 	protected Label lblEstimate;
 	protected Label lblPiEstimate;
@@ -40,11 +45,6 @@ public class PiView extends View<PiModel> {
 	protected Slider slider;
 	protected Button btnChart;
 	protected Button btnClear;
-
-	// Center: A visualisation 
-	protected Arc arc;
-	protected Rectangle rectangle;
-	protected Pane center;
 
 	double sideLength;
 
@@ -107,18 +107,16 @@ public class PiView extends View<PiModel> {
 
 		// Bottom 2: controls
 		HBox bottom2 = new HBox();
+		bottom2.setSpacing(4);
 		btnStart = new Button(t.getString("mw.btnStart"));
 		btnStop = new Button(t.getString("mw.btnStop"));
 
 		slider = new Slider(0, 1, 0.5);
 		btnChart = new Button(t.getString("mw.btnChart"));
 
-		// TODO Add text to slider positions
-		slider.setShowTickLabels(true);
-
 		btnClear = new Button(t.getString("mw.btnClear"));
 
-		// These buttons are locked by deafault
+		// These buttons are locked by default
 		btnStop.setDisable(true);
 		btnChart.setDisable(true);
 		btnStop.setDisable(true);
@@ -129,7 +127,7 @@ public class PiView extends View<PiModel> {
 		// Bottom combined
 		VBox bottom = new VBox();
 		bottom.getChildren().addAll(bottom1, bottom2);
-
+		
 		main.setBottom(bottom);
 
 		Scene scene = new Scene(main);
