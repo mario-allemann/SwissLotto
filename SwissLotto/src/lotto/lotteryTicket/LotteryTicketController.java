@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -89,9 +90,14 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 			if (this.chancesStage != null) {
 				this.chancesStage.close();
 			}
+			ScrollPane root = new ScrollPane();
+			root.setStyle("-fx-background: #FEE9E9;");
+			root.getStyleClass().add("chances");
+			// root.getStyleClass().add("chances");
 			VBox main = this.calculateChances();
-			main.setStyle("-fx-background-color: #FEE9E9");
-			Scene scene = new Scene(main);
+			main.setStyle("-fx-font-size: 20");
+			root.setContent(main);
+			Scene scene = new Scene(root);
 			this.chancesStage = new Stage();
 			this.chancesStage.setScene(scene);
 			this.chancesStage.setTitle(t.getString("lt.chances"));

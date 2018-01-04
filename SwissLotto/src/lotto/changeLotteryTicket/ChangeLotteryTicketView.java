@@ -76,7 +76,6 @@ public class ChangeLotteryTicketView extends View<ChangeLotteryTicketModel> {
 		buttons.getChildren().addAll(save, cancel, notification);
 
 		bp.setBottom(buttons);
-
 		Scene scene = new Scene(bp);
 
 		return scene;

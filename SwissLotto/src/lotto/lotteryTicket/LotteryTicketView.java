@@ -20,7 +20,7 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 
 	// TOP
 	protected Menu menuOptions;
-	protected Menu menuOptionsChangeLT;
+	protected MenuItem menuOptionsChangeLT;
 	protected Menu menuOptionsLanguage;
 
 	// CENTER
@@ -54,7 +54,8 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		// Sets up the menu
 		MenuBar menuBar = new MenuBar();
 		menuOptions = new Menu(t.getString("program.menu.options"));
-		menuOptionsChangeLT = new Menu(t.getString("lt.menu.options.changeLT"));
+		menuOptionsChangeLT = new MenuItem(t.getString("lt.menu.options.changeLT"));
+		
 		menuOptionsLanguage = new Menu(t.getString("program.menu.options.language"));
 		menuOptions.getItems().addAll(menuOptionsChangeLT, menuOptionsLanguage);
 
@@ -72,7 +73,6 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 		}
 
 		menuBar.getMenus().addAll(menuOptions);
-
 		bp.setTop(menuBar);
 
 		// CENTER - the numbers
@@ -99,9 +99,10 @@ public class LotteryTicketView extends View<LotteryTicketModel> {
 
 		this.btnChance = new Button(t.getString("lt.btnChance"));
 		this.btnChance.getStyleClass().add("control-button");
-		HBox hb = new HBox();
-		hb.getChildren().addAll(btnPlay, btnChance);
-		bp.setBottom(hb);
+		HBox bottom = new HBox();
+		bottom.setSpacing(4);
+		bottom.getChildren().addAll(btnPlay, btnChance);
+		bp.setBottom(bottom);
 
 		Scene scene = new Scene(bp);
 
