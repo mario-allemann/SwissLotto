@@ -11,11 +11,11 @@ public class PiChart {
 
 	public PiChart(int totalPoints, PiChartData piData) {
 
-		NumberAxis xAxis = new NumberAxis(0, totalPoints, totalPoints / 10);
+		final NumberAxis xAxis = new NumberAxis(0, totalPoints, totalPoints / 10);
 		xAxis.setLabel("Generated Points");
-		NumberAxis yAxis = new NumberAxis(2.5, 3.5, 0.1);
+		final NumberAxis yAxis = new NumberAxis(2.5, 3.5, 0.1);
 		yAxis.setLabel("Pi estimation");
-		LineChart<Integer, Double> lineChart = new LineChart(xAxis, yAxis);
+		final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
 		//Adds two points to the chart (estimation and PI constant)
 		lineChart.getData().addAll(piData.series, piData.constantPI);

@@ -3,10 +3,8 @@ package lotto.lotteryTicket;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.TreeSet;
 
-import javafx.scene.control.ToggleButton;
 import lotto.ServiceLocator;
 import lotto.abstractClasses.Model;
 

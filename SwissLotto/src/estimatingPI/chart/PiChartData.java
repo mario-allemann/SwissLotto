@@ -8,12 +8,12 @@ import javafx.scene.chart.XYChart;
  */
 public class PiChartData {
 
-	XYChart.Series<Integer, Double> series;
-	XYChart.Series<Integer, Double> constantPI;
+	final XYChart.Series<Number, Number> series;
+	final XYChart.Series<Number, Number> constantPI;
 
 	public PiChartData() {
 		series = new XYChart.Series<>();
-		constantPI = new XYChart.Series<>();
+		constantPI = new XYChart.Series<Number, Number>();
 		series.setName("Estimate");
 		constantPI.setName("Pi");
 		
