@@ -50,6 +50,7 @@ public class PiView extends View<PiModel> {
 
 	public PiView(Stage stage, PiModel model) {
 		super(stage, model);
+		stage.setTitle("Estimating Pi");
 
 	}
 
@@ -132,7 +133,6 @@ public class PiView extends View<PiModel> {
 		main.setBottom(bottom);
 
 		Scene scene = new Scene(main);
-
 		return scene;
 
 	}
