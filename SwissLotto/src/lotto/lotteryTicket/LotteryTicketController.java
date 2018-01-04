@@ -112,7 +112,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	}
 
 	/**
-	 * Adds ActionEvents on the lucky buttons to change color and lock them if too
+	 * Adds ActionEvents on the normal buttons to change color and lock them if too
 	 * many get selected
 	 * 
 	 */
@@ -155,7 +155,7 @@ public class LotteryTicketController extends Controller<LotteryTicketModel, Lott
 	}
 
 	/**
-	 * Adds ActionEvents on the normal buttons to change color and lock them if too
+	 * Adds ActionEvents on the lucky buttons to change color and lock them if too
 	 * many get selected
 	 * 
 	 */
